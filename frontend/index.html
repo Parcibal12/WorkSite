@@ -4,30 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WorkSite</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/frontend/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="tablero">
         <sidebar-component></sidebar-component>
+        
         <main id="main-content-container" class="main-content">
             <header class="main-content__header">
                 <h1 id="page-title" class="main-content__title"></h1>
                 <div class="main-content__actions">
-                    <button class="accion-button accion-button-notifications" aria-label="Notifications">
-                        <img src="/frontend/assets/icons/notifications.svg" alt="Notifications Icon">
+                    <button class="accion-button" aria-label="Notifications">
+                        <img src="/frontend/assets/icons/notifications.svg" alt="Notifications Icon" class="accion-button__icon">
                     </button>
-                    <button class="accion-button accion-button-profile" aria-label="Profile">
-                        <img src="/frontend/assets/icons/profile.svg" alt="Profile Icon"> 
+                    <button class="accion-button" aria-label="Profile">
+                        <img src="/frontend/assets/icons/profile.svg" alt="Profile Icon" class="accion-button__icon"> 
                     </button>
                 </div>
             </header>
-            <hr class="separator separador--header">
+            <hr class="separador separador--header">
             <div id="content-area">
                 <!-- Contenido dinámico de las secciones viene acá -->
             </div>
-
             <script type="module" src="/frontend/blocks/sidebar/sidebar.js"></script>
+            
         </main>
     </div>
 </body>
