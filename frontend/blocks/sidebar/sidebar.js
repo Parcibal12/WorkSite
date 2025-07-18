@@ -49,6 +49,7 @@ sidebarTemplate.innerHTML = `
                         <span class="nav-menu__icon nav-menu__icon--employers"></span>
                         <span class="nav-menu__text">Employers</span>
                     </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -66,11 +67,11 @@ class SidebarComponent extends HTMLElement {
     }
 
     setupEventListeners() {
-        const navItems = this.shadowRoot.querySelectorAll('.nav-menu__link');
-        navItems.forEach(item => {
-            item.addEventListener('click', (event) => {
+        const navLinks = this.shadowRoot.querySelectorAll('.nav-menu__link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
                 event.preventDefault();
-                this.handleNavigationClick(item);
+                this.handleNavigationClick(link.parentElement);
             });
         });
     }

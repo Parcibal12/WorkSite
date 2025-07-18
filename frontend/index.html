@@ -9,15 +9,16 @@
 </head>
 <body>
     <div class="tablero">
+        <sidebar-component></sidebar-component>
         <main id="main-content-container" class="main-content">
             <header class="main-content__header">
                 <h1 id="page-title" class="main-content__title"></h1>
                 <div class="main-content__actions">
                     <button class="accion-button accion-button-notifications" aria-label="Notifications">
-                        <img src="/frontend/asstets/icons/notifications.svg" alt="Notifications Icon">
+                        <img src="/frontend/assets/icons/notifications.svg" alt="Notifications Icon">
                     </button>
                     <button class="accion-button accion-button-profile" aria-label="Profile">
-                        <img src="/frontend/asstets/icons/profile.svg" alt="Profile Icon"> 
+                        <img src="/frontend/assets/icons/profile.svg" alt="Profile Icon"> 
                     </button>
                 </div>
             </header>
@@ -25,6 +26,8 @@
             <div id="content-area">
                 <!-- Contenido dinámico de las secciones viene acá -->
             </div>
+
+            <script type="module" src="/frontend/blocks/sidebar/sidebar.js"></script>
         </main>
     </div>
 </body>
