@@ -1,0 +1,240 @@
+.explore {
+  background-color: #000;
+  padding: 40px 20px;
+  color: #fff;
+}
+
+.explore__container {
+  max-width: 1200px; 
+  margin: 0 auto;
+  padding: 0 16px;       
+}
+
+.explore__top-jobs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.explore__section-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.explore__view-more {
+  font-size: 14px;
+  color: #fff;
+  text-decoration: underline;
+  font-weight: 400;
+}
+
+.explore__top-jobs-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: space-between;
+}
+
+.job-card {
+  flex: 1 1 calc(33.333% - 16px);
+  max-width: calc(33.333% - 16px);
+  background-color: transparent;
+  border: 1px solid #fff;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-sizing: border-box;
+  position: relative;
+}
+.job-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.job-card__image {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.job-card__info {
+  flex-grow: 1;
+}
+
+.job-card__company {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.job-card__role {
+  margin: 0;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.tarjeta-empleo__boton-guardar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 10;
+}
+
+.tarjeta-empleo__boton-guardar-icono {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.job-card__details {
+  margin: 0;
+  font-size: 14px;
+  color: #fff;
+}
+
+.job-card__location {
+  font-size: 12px;
+  color: #F78E8E;
+}
+
+.job-card__location--highlight {
+  color: #d64c3b;
+}
+
+.job-card__posted {
+  margin-left: 4px;
+  color: #aaa;
+}
+
+
+
+.explore__suggested-searches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 30px;
+
+}
+
+
+
+
+.search-button {
+    background-color: #000000;
+    border: 1px solid #ffffff;
+    border-radius: 12px;
+    padding: 12px 20px;
+    color: #f3f3f3;
+    font-size: 16px;
+    font-family: 'SF Pro', sans-serif;
+    display: flex;
+    align-items: center; 
+    gap: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    box-sizing: border-box;
+}
+
+.search-button:hover {
+    background-color: #3a3a3a;
+    border-color: #666666;
+}
+
+
+.search-button__icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    object-fit: contain;
+}
+
+
+
+
+.explore__content-for-you {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 50px;
+}
+
+.explore__content-for-you-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.explore__content-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    justify-content: center;
+}
+
+.content-card {
+    flex: 1 1 calc(30% - 21.333px);
+    max-width: calc(30% - 21.333px);
+    background-color: #000;
+    border: 1px solid #fff;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 250px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.content-card__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: auto;
+}
+
+.content-card__text {
+    font-size: 16px;
+    color: #f3f3f3;
+    margin: 0;
+}
+
+.content-card__like-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-card__icon {
+    width: 90%;
+    height: 90%;
+}
