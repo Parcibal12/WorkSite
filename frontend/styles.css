@@ -17,7 +17,16 @@
     --altura-header-contenido: 80px;
 }
 
-body{
+html {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
     margin: 0;
     padding: 0;
     font-family: var(--fuente-principal);
@@ -25,9 +34,12 @@ body{
     line-height: var(--altura-linea-base);
     color: var(--color-texto-general);
     background-color: var(--color-fondo-primario);
+    min-height: 100vh;
+    display: flex; 
+    flex-direction: column;
 }
 
-img{
+img {
     max-width: 100%;
     height: auto;
     display: block;
@@ -40,23 +52,29 @@ input, button, select, textarea {
 
 .tablero {
     display: flex;
-    min-height: 100vh;
+    flex-grow: 1;
     background: var(--color-fondo-primario);
-    overflow: hidden;
 }
 
-.main-content{
+.main-content {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     padding: 0 var(--padding-horizontal-contenido);
-    padding-top: var(--altura-header-contenido);
+    
+    height: 100vh;
     overflow-y: auto;
+    
     box-sizing: border-box;
 }
 
+#content-area {
+    padding-top: var(--altura-header-contenido);
+    min-height: calc(100% + var(--altura-header-contenido));
+}
+
+
 .main-content__header {
-    right: 0;
     height: var(--altura-header-contenido);
     background: var(--color-fondo-primario);
     display: flex;
@@ -65,6 +83,7 @@ input, button, select, textarea {
     position: fixed;
     top: 0;
     left: var(--ancho-barra-lateral);
+    width: calc(100% - var(--ancho-barra-lateral));
     padding: 0 var(--padding-horizontal-contenido);
     box-sizing: border-box;
     z-index: 90;
@@ -117,7 +136,7 @@ input, button, select, textarea {
     position: fixed;
     top: var(--altura-header-contenido);
     left: var(--ancho-barra-lateral);
-    right: 0;
+    width: calc(100% - var(--ancho-barra-lateral));
     margin: 0;
     z-index: 80;
     background-color: var(--color-borde-divisor);

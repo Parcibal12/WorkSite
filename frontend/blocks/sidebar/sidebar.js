@@ -9,21 +9,18 @@ sidebarTemplate.innerHTML = `
 
         <div class="sidebar__section">
             <ul class="nav-menu">
-                <li class="nav-menu__item nav-menu__item--active">
-                    <a href="#" class="nav-menu__link">
-                        <span class="nav-menu__icon nav-menu__icon--explore"></span>
+                <li class="nav-menu__item">
+                    <a href="/explore" class="nav-menu__link"> <span class="nav-menu__icon nav-menu__icon--explore"></span>
                         <span class="nav-menu__text">Explore</span>
                     </a>
                 </li>
                 <li class="nav-menu__item">
-                    <a href="#" class="nav-menu__link">
-                        <span class="nav-menu__icon nav-menu__icon--feed"></span>
+                    <a href="/feed" class="nav-menu__link"> <span class="nav-menu__icon nav-menu__icon--feed"></span>
                         <span class="nav-menu__text">Feed</span>
                     </a>
                 </li>
                 <li class="nav-menu__item">
-                    <a href="#" class="nav-menu__link">
-                        <span class="nav-menu__icon nav-menu__icon--inbox"></span>
+                    <a href="/inbox" class="nav-menu__link"> <span class="nav-menu__icon nav-menu__icon--inbox"></span>
                         <span class="nav-menu__text">Inbox</span>
                     </a>
                 </li>
@@ -33,20 +30,17 @@ sidebarTemplate.innerHTML = `
         <div class="sidebar__section">
             <ul class="nav-menu">
                 <li class="nav-menu__item">
-                    <a href="#" class="nav-menu__link">
-                        <span class="nav-menu__icon nav-menu__icon--jobs"></span>
+                    <a href="/jobs" class="nav-menu__link"> <span class="nav-menu__icon nav-menu__icon--jobs"></span>
                         <span class="nav-menu__text">Jobs</span>
                     </a>
                 </li>
                 <li class="nav-menu__item">
-                    <a href="#" class="nav-menu__link">
-                        <span class="nav-menu__icon nav-menu__icon--events"></span>
+                    <a href="/events" class="nav-menu__link"> <span class="nav-menu__icon nav-menu__icon--events"></span>
                         <span class="nav-menu__text">Events</span>
                     </a>
                 </li>
                 <li class="nav-menu__item">
-                    <a href="#" class="nav-menu__link">
-                        <span class="nav-menu__icon nav-menu__icon--employers"></span>
+                    <a href="/employers" class="nav-menu__link"> <span class="nav-menu__icon nav-menu__icon--employers"></span>
                         <span class="nav-menu__text">Employers</span>
                     </a>
                 </li>
@@ -64,6 +58,7 @@ class SidebarComponent extends HTMLElement {
 
     connectedCallback() {
         this.setupEventListeners();
+        this.setActiveItemFromUrl();
     }
 
     setupEventListeners() {
@@ -71,27 +66,50 @@ class SidebarComponent extends HTMLElement {
         navLinks.forEach(link => {
             link.addEventListener('click', (event) => {
                 event.preventDefault();
-                this.handleNavigationClick(link.parentElement);
+
+                this.handleNavigationClick(link);
+
+
+                const fullRoute = link.getAttribute('href');
+                const page = fullRoute.substring(1);
+
+                document.body.dispatchEvent(
+                    new CustomEvent('navigate', {
+                        detail: { page: page }
+                    })
+                );
             });
         });
     }
 
-    handleNavigationClick(clickedItem) {
+    handleNavigationClick(clickedLink) {
         const navItems = this.shadowRoot.querySelectorAll('.nav-menu__item');
+        
         navItems.forEach(item => {
             item.classList.remove('nav-menu__item--active');
         });
 
-        clickedItem.classList.add('nav-menu__item--active');
-
-        const linkText = clickedItem.querySelector('.nav-menu__text').textContent;
-        this.dispatchEvent(new CustomEvent('navigate', {
-            bubbles: true,
-            composed: true,
-            detail: { page: linkText.toLowerCase() }
-        }));
+        const parentListItem = clickedLink.parentElement;
+        if (parentListItem) {
+            parentListItem.classList.add('nav-menu__item--active');
+        }
     }
 
+    setActiveItemFromUrl() {
+        const currentPath = window.location.pathname;
+        const activeRoute = (currentPath === '/' || currentPath.endsWith('/index.html')) ? '/explore' : currentPath;
+
+        const activeLink = this.shadowRoot.querySelector(`.nav-menu__link[href="${activeRoute}"]`);
+        if (activeLink) {
+            this.handleNavigationClick(activeLink);
+        } else {
+            const baseRoute = activeRoute.split('/')[1];
+            const baseActiveLink = this.shadowRoot.querySelector(`.nav-menu__link[href="/${baseRoute}"]`);
+            if (baseActiveLink) {
+                this.handleNavigationClick(baseActiveLink);
+            }
+        }
+    }
 }
 
 customElements.define('sidebar-component', SidebarComponent);

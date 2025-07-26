@@ -1,0 +1,212 @@
+:host {
+    --feed-color-general: #000000;
+    --feed-text-color: #f3f3f3;
+    --feed-text-secundary-color: #F78E8E;
+    --feed-border-color: #ffffff;
+    --feed-button-inactive-bg: #000000;
+    --feed-button-inactive-border: #ffffff;
+    --feed-padding-horizontal: 32px;
+    --feed-gap-sections: 20px;
+    --feed-border-radius-large: 12px;
+    --feed-border-radius-small: 30px;
+}
+
+.feed-page {
+    background-color: var(--feed-color-general);
+    color: var(--feed-text-color);
+    font-family: 'SF Pro', sans-serif;
+    padding-bottom: var(--feed-gap-sections);
+    padding-top: 20px;
+}
+
+.feed-page__container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 0 var(--feed-padding-horizontal);
+}
+
+.feed-filters {
+    display: flex;
+    gap: 15px;
+    margin-bottom: var(--feed-gap-sections);
+    justify-content: center;
+}
+
+.feed-filters__button {
+    background-color: var(--feed-button-inactive-bg);
+    border: 1px solid var(--feed-button-inactive-border);
+    border-radius: var(--feed-border-radius-small);
+    color: var(--feed-text-color);
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.feed-filters__button:hover {
+    background-color: #3a3a3a;
+    border-color: #666666;
+}
+
+
+
+
+.create-post {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: var(--feed-color-general);
+    border: 1px solid var(--feed-border-color);
+    border-radius: var(--feed-border-radius-large);
+    padding: 15px 20px;
+    margin-bottom: var(--feed-gap-sections);
+}
+
+.create-post__avatar {
+    width: 51px;
+    height: 51px;
+    background-color: var(--feed-color-general);
+    border: 1px solid white; 
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.create-post__input {
+    flex-grow: 1;
+    background: none;
+    border: none;
+    color: var(--feed-text-color);
+    font-size: 16px;
+    padding: 5px 0;
+    outline: none;
+}
+
+.create-post__input::placeholder {
+    color: var(--feed-text-secundary-color);
+}
+
+
+
+
+
+.post-card {
+    background-color: var(--feed-color-general);
+    border-radius: var(--feed-border-radius-large);
+    padding: 20px;
+    margin-bottom: var(--feed-gap-sections);
+}
+
+.post-card__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.post-card__avatar {
+    width: 51px;
+    height: 51px;
+    background-color: var(--feed-color-general);
+    border: 1px solid white; 
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.post-card__info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.post-card__username {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--feed-text-color);
+    margin: 0;
+}
+
+.post-card__profession,
+.post-card__description {
+    font-size: 14px;
+    color: var(--feed-light-text-color);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.post-card__media {
+    width: 100%;
+    height: 250px;
+    background-color: #000000;
+    border: 1px solid var(--feed-border-color);
+    border-radius: var(--feed-border-radius-small);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--feed-light-text-color);
+    font-size: 14px;
+    margin-bottom: 1px;
+}
+
+.post-card__media::before {
+    content: "🖼️";
+    font-size: 50px;
+}
+
+.post-card__actions {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    padding-top: 15px;
+}
+
+.post-card__action-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--feed-light-text-color);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.post-card__action-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-card__action-icon-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+
+
+
+
+
+
+
+
+.comment-input {
+    background-color: var(--feed-color-general);
+    border: 1px solid var(--feed-border-color);
+    border-radius: var(--feed-border-radius-small);
+    padding: 10px 15px;
+}
+
+.comment-input__space {
+    width: 100%;
+    background: none;
+    border: none;
+    color: var(--feed-text-color);
+    font-size: 16px;
+    outline: none;
+    padding: 0;
+}
+
+.comment-input__space::placeholder {
+    color: var(--feed-text-secundary-color);
+}

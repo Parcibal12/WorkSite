@@ -30,7 +30,7 @@ ul {
 
 .sidebar {
     width: 223px;
-    height: 1024px;
+    height: 100vh;
     background: var(--color-fondo-barra-lateral);
     box-shadow: 0.5px 0px 0px var(--color-sombra-lateral);
     display: flex;
@@ -81,13 +81,16 @@ ul {
     width: 100%;
 }
 
+
 .nav-menu__item {
     height: var(--altura-item-navegacion);
-    padding: 0 var(--padding-horizontal-item);
     display: flex;
     justify-content: flex-start;
     align-items: center;
     transition: background-color 0.2s ease;
+    border-radius: 6px;
+    margin: 0 8px;
+    width: calc(100% - 16px);
 }
 
 .nav-menu__item:hover {
@@ -95,7 +98,7 @@ ul {
 }
 
 .nav-menu__item--active {
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .nav-menu__link {
@@ -103,7 +106,7 @@ ul {
     display: flex;
     align-items: center;
     gap: var(--gap-icono-texto);
-    padding: var(--padding-interno-enlace);
+    padding: var(--padding-interno-enlace) 8px;
     height: 100%;
     width: 100%;
     color: var(--color-texto-principal);
@@ -112,6 +115,8 @@ ul {
     font-weight: 400;
     line-height: 22px;
 }
+
+
 
 .nav-menu__icon {
     width: 24px;

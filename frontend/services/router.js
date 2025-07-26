@@ -1,30 +1,36 @@
 import '/frontend/blocks/explore/explore.js';
+import '/frontend/blocks/feed/feed.js';
 import '/frontend/blocks/sidebar/sidebar.js';
 
 
 const Router = {
     init: () => {
         document.body.addEventListener("navigate", (event) => {
-            event.preventDefault();
             const page = event.detail.page;
             Router.go(`/${page}`);
         });
 
         window.addEventListener("popstate", (event) => {
-            Router.go(event.state ? event.state.route : location.pathname, false);
+            if (event.state && event.state.route) {
+                Router.go(event.state.route, false);
+            }
         });
 
         const initialPath = location.pathname;
-        if (initialPath === '/' || initialPath.endsWith('/index.html') || initialPath.endsWith('/frontend/index.html')) {
-            Router.go('/explore', false);
+        if (initialPath === '/' || initialPath.endsWith('/index.html')) {
+            Router.go('/explore');
         } else {
-            Router.go(initialPath, false);
+            Router.go(initialPath);
         }
     },
 
     go: (route, addToHistory = true) => {
+        console.log(`Navegando a: ${route}`);
+
         if (addToHistory) {
-            history.pushState({ route }, "", route);
+            if (location.pathname !== route) {
+                history.pushState({ route }, "", route);
+            }
         }
 
         let pageComponent = null;
@@ -36,10 +42,16 @@ const Router = {
                 pageTitle = "Explore";
                 break;
 
+            case "/feed":
+                pageComponent = document.createElement("feed-section");
+                pageTitle = "Feed";
+                break;
+
+
+
             default:
                 pageComponent = document.createElement("div");
-                pageComponent.textContent = "Page Not Found";
-                pageTitle = "Not Found";
+                pageTitle = "No Encontrado";
                 console.warn(`Ruta no manejada: ${route}`);
                 break;
         }
@@ -47,20 +59,15 @@ const Router = {
         if (pageComponent) {
             const contentArea = document.getElementById("content-area");
             if (!contentArea) {
-                console.error("El elemento #content-area no fue encontrado en el DOM.");
                 return;
             }
 
-            if (contentArea.children.length > 0) {
-                contentArea.children[0].remove();
-            }
+            contentArea.innerHTML = '';
             contentArea.appendChild(pageComponent);
 
             const pageTitleElement = document.getElementById("page-title");
             if (pageTitleElement) {
                 pageTitleElement.textContent = pageTitle;
-            } else {
-                console.warn("El elemento #page-title no fue encontrado en el DOM.");
             }
         }
 
