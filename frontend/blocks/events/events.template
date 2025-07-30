@@ -1,0 +1,132 @@
+<section class="events-section">
+  <div class="events-section__header">
+    <div class="events-section__controls">
+      <div class="events-section__controls-top">
+        <div class="search-bar">
+          <input type="text" placeholder="Search events" class="search-bar__input">
+          <button class="search-bar__button">
+            <img src="/frontend/assets/icons/search.svg" alt="Search icon" class="search-bar__icon">
+          </button>
+        </div>
+
+        <div class="status-filters">
+          <div class="status-filters__item">
+            <img src="/frontend/assets/icons/bookmark_filled.svg" alt="Saved icon" class="status-filters__icon">
+            <span class="status-filters__text">Saved</span>
+            <span class="status-filters__count">0</span>
+          </div>
+          <div class="status-filters__item">
+            <img src="/frontend/assets/icons/check_circle.svg" alt="Registered icon" class="status-filters__icon">
+            <span class="status-filters__text">Registered</span>
+            <span class="status-filters__count">0</span>
+          </div>
+          <div class="status-filters__item">
+            <img src="/frontend/assets/icons/check_circle.svg" alt="Check-ins icon" class="status-filters__icon">
+            <span class="status-filters__text">Check-ins</span>
+            <span class="status-filters__count">0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="events-section__controls-bottom">
+        <div class="filter-buttons">
+          <button class="filter-buttons__button">
+            Medium
+            <img src="/frontend/assets/icons/keyboard_arrow_down.svg" alt="Dropdown arrow" class="filter-buttons__icon">
+          </button>
+          <button class="filter-buttons__button">
+            Date
+            <img src="/frontend/assets/icons/keyboard_arrow_down.svg" alt="Dropdown arrow" class="filter-buttons__icon">
+          </button>
+          <button class="filter-buttons__button">
+            Employer
+            <img src="/frontend/assets/icons/keyboard_arrow_down.svg" alt="Dropdown arrow" class="filter-buttons__icon">
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="events-section__subtitle">All events</h2>
+
+  <div class="events-grid">
+    <article class="event-card">
+      <div class="event-card__header">
+        <div class="event-card__logo-placeholder"></div>
+        <h3 class="event-card__company">Lorem ipsum College</h3>
+        <button class="event-card__bookmark">
+          <img src="/frontend/assets/icons/bookmark_filled.svg" alt="Bookmark icon" class="event-card__bookmark-icon">
+        </button>
+      </div>
+      <p class="event-card__date">August 25, 2025, Part-Time Monday,</p>
+      <p class="event-card__time">In person - Mon, Aug 25 - 12 PM - 04</p>
+      <hr class="event-card__separator">
+      <p class="event-card__attendees">13 students going</p>
+    </article>
+    <article class="event-card">
+      <div class="event-card__header">
+        <div class="event-card__logo-placeholder"></div>
+        <h3 class="event-card__company">Lorem ipsum College</h3>
+        <button class="event-card__bookmark">
+          <img src="/frontend/assets/icons/bookmark_filled.svg" alt="Bookmark icon" class="event-card__bookmark-icon">
+        </button>
+      </div>
+      <p class="event-card__date">August 25, 2025, Part-Time Monday,</p>
+      <p class="event-card__time">In person - Mon, Aug 25 - 12 PM - 04</p>
+      <hr class="event-card__separator">
+      <p class="event-card__attendees">13 students going</p>
+    </article>
+    <article class="event-card">
+      <div class="event-card__header">
+        <div class="event-card__logo-placeholder"></div>
+        <h3 class="event-card__company">Lorem ipsum College</h3>
+        <button class="event-card__bookmark">
+          <img src="/frontend/assets/icons/bookmark_filled.svg" alt="Bookmark icon" class="event-card__bookmark-icon">
+        </button>
+      </div>
+      <p class="event-card__date">August 25, 2025, Part-Time Monday,</p>
+      <p class="event-card__time">In person - Mon, Aug 25 - 12 PM - 04</p>
+      <hr class="event-card__separator">
+      <p class="event-card__attendees">13 students going</p>
+    </article>
+    <article class="event-card">
+      <div class="event-card__header">
+        <div class="event-card__logo-placeholder"></div>
+        <h3 class="event-card__company">Lorem ipsum College</h3>
+        <button class="event-card__bookmark">
+          <img src="/frontend/assets/icons/bookmark_filled.svg" alt="Bookmark icon" class="event-card__bookmark-icon">
+        </button>
+      </div>
+      <p class="event-card__date">August 25, 2025, Part-Time Monday,</p>
+      <p class="event-card__time">In person - Mon, Aug 25 - 12 PM - 04</p>
+      <hr class="event-card__separator">
+      <p class="event-card__attendees">13 students going</p>
+    </article>
+    <article class="event-card">
+      <div class="event-card__header">
+        <div class="event-card__logo-placeholder"></div>
+        <h3 class="event-card__company">Lorem ipsum College</h3>
+        <button class="event-card__bookmark">
+          <img src="/frontend/assets/icons/bookmark_filled.svg" alt="Bookmark icon" class="event-card__bookmark-icon">
+        </button>
+      </div>
+      <p class="event-card__date">August 25, 2025, Part-Time Monday,</p>
+      <p class="event-card__time">In person - Mon, Aug 25 - 12 PM - 04</p>
+      <hr class="event-card__separator">
+      <p class="event-card__attendees">13 students going</p>
+    </article>
+    <article class="event-card">
+      <div class="event-card__header">
+        <div class="event-card__logo-placeholder"></div>
+        <h3 class="event-card__company">Lorem ipsum College</h3>
+        <button class="event-card__bookmark">
+          <img src="/frontend/assets/icons/bookmark_filled.svg" alt="Bookmark icon" class="event-card__bookmark-icon">
+        </button>
+      </div>
+      <p class="event-card__date">August 25, 2025, Part-Time Monday,</p>
+      <p class="event-card__time">In person - Mon, Aug 25 - 12 PM - 04</p>
+      <hr class="event-card__separator">
+      <p class="event-card__attendees">13 students going</p>
+    </article>
+  </div>
+</section>
