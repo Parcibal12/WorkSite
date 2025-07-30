@@ -103,3 +103,28 @@
     color: #FFC0CB;
     text-decoration: underline;
 }
+
+
+
+
+
+
+
+
+
+
+.register__message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.register__message--success {
+    color: #F78E8E;
+}
+
+.register__message--error {
+    color: #C02C29;
+}
