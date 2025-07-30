@@ -2,6 +2,7 @@ import '/frontend/blocks/explore/explore.js';
 import '/frontend/blocks/feed/feed.js';
 import '/frontend/blocks/sidebar/sidebar.js';
 import '/frontend/blocks/events/events.js';
+import '/frontend/blocks/register/register.js';
 
 
 const Router = {
@@ -50,6 +51,10 @@ const Router = {
             case "/events":
                 pageComponent = document.createElement("events-section");
                 pageTitle = "Events";
+                break;
+            case "/register":
+                pageComponent = document.createElement("register-section");
+                pageTitle = "Register";
                 break;
 
 
