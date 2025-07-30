@@ -1,6 +1,7 @@
 import '/frontend/blocks/explore/explore.js';
 import '/frontend/blocks/feed/feed.js';
 import '/frontend/blocks/sidebar/sidebar.js';
+import '/frontend/blocks/events/events.js';
 
 
 const Router = {
@@ -45,6 +46,10 @@ const Router = {
             case "/feed":
                 pageComponent = document.createElement("feed-section");
                 pageTitle = "Feed";
+                break;
+            case "/events":
+                pageComponent = document.createElement("events-section");
+                pageTitle = "Events";
                 break;
 
 
