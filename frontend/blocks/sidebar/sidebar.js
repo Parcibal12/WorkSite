@@ -1,62 +1,23 @@
-const sidebarTemplate = document.createElement('template');
-sidebarTemplate.innerHTML = `
-    <link rel="stylesheet" href="/frontend/blocks/sidebar/sidebar.css">
+import BaseHTMLElement from "../base/BaseHTMLElement.js";
 
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <img class="sidebar__logo-img" src="/frontend/assets/logo.png" alt="Logo">
-        </div>
-
-        <div class="sidebar__section">
-            <ul class="nav-menu">
-                <li class="nav-menu__item">
-                    <a href="/explore" class="nav-menu__link"> <span class="nav-menu__icon nav-menu__icon--explore"></span>
-                        <span class="nav-menu__text">Explore</span>
-                    </a>
-                </li>
-                <li class="nav-menu__item">
-                    <a href="/feed" class="nav-menu__link"> <span class="nav-menu__icon nav-menu__icon--feed"></span>
-                        <span class="nav-menu__text">Feed</span>
-                    </a>
-                </li>
-                <li class="nav-menu__item">
-                    <a href="/inbox" class="nav-menu__link"> <span class="nav-menu__icon nav-menu__icon--inbox"></span>
-                        <span class="nav-menu__text">Inbox</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="sidebar__section">
-            <ul class="nav-menu">
-                <li class="nav-menu__item">
-                    <a href="/jobs" class="nav-menu__link"> <span class="nav-menu__icon nav-menu__icon--jobs"></span>
-                        <span class="nav-menu__text">Jobs</span>
-                    </a>
-                </li>
-                <li class="nav-menu__item">
-                    <a href="/events" class="nav-menu__link"> <span class="nav-menu__icon nav-menu__icon--events"></span>
-                        <span class="nav-menu__text">Events</span>
-                    </a>
-                </li>
-                <li class="nav-menu__item">
-                    <a href="/employers" class="nav-menu__link"> <span class="nav-menu__icon nav-menu__icon--employers"></span>
-                        <span class="nav-menu__text">Employers</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-`;
-
-class SidebarComponent extends HTMLElement {
+class SidebarComponent extends BaseHTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(sidebarTemplate.content.cloneNode(true));
     }
 
     connectedCallback() {
+        this.init();
+    }
+
+    async init() {
+        await this.loadHTML("/frontend/blocks/sidebar/sidebar.template"); 
+        
+        const styleLink = document.createElement('link');
+        styleLink.setAttribute('rel', 'stylesheet');
+        styleLink.setAttribute('href', '/frontend/blocks/sidebar/sidebar.css');
+        this.shadowRoot.appendChild(styleLink);
+
         this.setupEventListeners();
         this.setActiveItemFromUrl();
     }
@@ -68,7 +29,6 @@ class SidebarComponent extends HTMLElement {
                 event.preventDefault();
 
                 this.handleNavigationClick(link);
-
 
                 const fullRoute = link.getAttribute('href');
                 const page = fullRoute.substring(1);
@@ -110,6 +70,12 @@ class SidebarComponent extends HTMLElement {
             }
         }
     }
+
+    disconnectedCallback() {
+
+    }
 }
 
 customElements.define('sidebar-component', SidebarComponent);
+
+export default SidebarComponent;
