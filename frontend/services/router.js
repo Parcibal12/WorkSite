@@ -3,7 +3,8 @@ import '/frontend/blocks/feed/feed.js';
 import '/frontend/blocks/sidebar/sidebar.js';
 import '/frontend/blocks/events/events.js';
 import '/frontend/blocks/register/register.js';
-
+import '/frontend/blocks/login/login.js';
+import '/frontend/blocks/jobs/jobs.js';
 
 const Router = {
     init: () => {
@@ -27,8 +28,6 @@ const Router = {
     },
 
     go: (route, addToHistory = true) => {
-        console.log(`Navegando a: ${route}`);
-
         if (addToHistory) {
             if (location.pathname !== route) {
                 history.pushState({ route }, "", route);
@@ -56,22 +55,24 @@ const Router = {
                 pageComponent = document.createElement("register-section");
                 pageTitle = "Register";
                 break;
-
-
+            case "/login":
+                pageComponent = document.createElement("login-section");
+                pageTitle = "Login";
+                break;
+            case "/jobs":
+                pageComponent = document.createElement("jobs-section");
+                pageTitle = "Jobs";
+                break;
+            
 
             default:
                 pageComponent = document.createElement("div");
                 pageTitle = "No Encontrado";
-                console.warn(`Ruta no manejada: ${route}`);
                 break;
         }
 
         if (pageComponent) {
             const contentArea = document.getElementById("content-area");
-            if (!contentArea) {
-                return;
-            }
-
             contentArea.innerHTML = '';
             contentArea.appendChild(pageComponent);
 
@@ -84,9 +85,5 @@ const Router = {
         window.scrollTo(0, 0);
     },
 };
-
-document.addEventListener("DOMContentLoaded", () => {
-    Router.init();
-});
 
 export default Router;

@@ -57,6 +57,7 @@
     color: white;
     box-sizing: border-box;
     outline: none;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
 }
 
 .login__input::placeholder {
@@ -102,4 +103,35 @@
 .login__register-link:hover {
     color: #FFC0CB;
     text-decoration: underline;
+}
+
+
+.login__input-error {
+    color: #C02C29;
+    font-size: 14px; 
+    margin-top: -5px;
+    min-height: 18px;
+    display: block;
+    text-align: left;
+}
+
+.login__input.input--error {
+    border: 2px solid #C02C29;
+    box-shadow: 0 0 0 3px rgba(192, 44, 41, 0.3);
+}
+
+.login__message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.login__message--success {
+    color: #4CAF50;
+}
+
+.login__message--error {
+    color: #C02C29;
 }

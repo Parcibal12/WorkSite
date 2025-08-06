@@ -1,10 +1,14 @@
 import BaseHTMLElement from "../base/BaseHTMLElement.js";
+import ValidatorForm from "../../services/validators/ValidatorForm.js";
+import ValidatorSignUpForm from "../../services/validators/ValidatorSignUpForm.js";
+import authService from "../../services/AuthService.js";
+
+const registerValidator = new ValidatorForm(new ValidatorSignUpForm());
 
 class RegisterSectionComponent extends BaseHTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.backendUrl = "http://localhost:3000";
     }
 
     connectedCallback() {
@@ -19,19 +23,51 @@ class RegisterSectionComponent extends BaseHTMLElement {
         styleLink.setAttribute('href', '/frontend/blocks/register/register.css');
         this.shadowRoot.appendChild(styleLink);
 
-        const pageTitleElement = document.getElementById("page-title");
-        if (pageTitleElement) {
-            pageTitleElement.textContent = "Register";
-        }
-
         this.registerForm = this.shadowRoot.getElementById('registerForm');
         this.usernameInput = this.shadowRoot.getElementById('username');
         this.emailInput = this.shadowRoot.getElementById('email');
         this.passwordInput = this.shadowRoot.getElementById('password');
+
         this.messageElement = this.shadowRoot.getElementById('message');
+        this.irLoginLink = this.shadowRoot.getElementById('IrLogin');
+
+        this.usernameErrorElement = this.shadowRoot.getElementById('username-error');
+        this.emailErrorElement = this.shadowRoot.getElementById('email-error');
+        this.passwordErrorElement = this.shadowRoot.getElementById('password-error');
 
         if (this.registerForm) {
             this.registerForm.addEventListener('submit', this.handleRegister.bind(this));
+        }
+
+        if (this.irLoginLink) {
+            this.irLoginLink.addEventListener('click', this.handleIrLogin.bind(this));
+        }
+    }
+
+    clearFieldErrors() {
+        this.usernameInput.classList.remove('input--error');
+        this.emailInput.classList.remove('input--error');
+        this.passwordInput.classList.remove('input--error');
+
+        if (this.usernameErrorElement) this.usernameErrorElement.textContent = '';
+        if (this.emailErrorElement) this.emailErrorElement.textContent = '';
+        if (this.passwordErrorElement) this.passwordErrorElement.textContent = '';
+    }
+
+    displayFieldErrors(errors) {
+        this.clearFieldErrors();
+
+        if (errors.username) {
+            this.usernameInput.classList.add('input--error');
+            if (this.usernameErrorElement) this.usernameErrorElement.textContent = errors.username;
+        }
+        if (errors.email) {
+            this.emailInput.classList.add('input--error');
+            if (this.emailErrorElement) this.emailInput.textContent = errors.email;
+        }
+        if (errors.password) {
+            this.passwordInput.classList.add('input--error');
+            if (this.passwordErrorElement) this.passwordErrorElement.textContent = errors.password;
         }
     }
 
@@ -40,35 +76,55 @@ class RegisterSectionComponent extends BaseHTMLElement {
 
         this.messageElement.textContent = '';
         this.messageElement.className = 'register__message';
+        this.clearFieldErrors();
 
         const username = this.usernameInput.value;
         const email = this.emailInput.value;
         const password = this.passwordInput.value;
 
-        // Aquí ya no hay try...catch para errores de red
-        const response = await fetch(`${this.backendUrl}/api/auth/register`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, email, password })
-        });
+        const formData = { username, email, password };
 
-        const data = await response.json();
+        const errors = registerValidator.validate(formData);
 
-        if (response.ok) {
-            this.messageElement.textContent = data.message || 'Registro exitoso.';
-            this.messageElement.classList.add('register__message--success');
-            this.registerForm.reset();
-        } else {
-            this.messageElement.textContent = data.message || 'Error en el registro.';
-            this.messageElement.classList.add('register__message--error');
+        if (errors) {
+            this.displayFieldErrors(errors);
+            this.showMessage('Please correct the errors', 'error');
+            return;
         }
+
+        const data = await authService.createUser({ username, email, password });
+
+        if (data && data.generalError) {
+            this.showMessage(data.generalError, 'error');
+        } else if (data) {
+            this.showMessage(data.message || 'Successful register', 'success');
+            this.registerForm.reset();
+            document.body.dispatchEvent(new CustomEvent('navigate', { detail: { page: 'login' } }));
+        } else {
+            this.showMessage('Error in register', 'error');
+        }
+    }
+
+    handleIrLogin(event) {
+        event.preventDefault();
+        document.body.dispatchEvent(new CustomEvent('navigate', {
+            bubbles: true,
+            composed: true,
+            detail: { page: 'login' }
+        }));
+    }
+
+    showMessage(message, type) {
+        this.messageElement.textContent = message;
+        this.messageElement.className = `register__message register__message--${type}`;
     }
 
     disconnectedCallback() {
         if (this.registerForm) {
             this.registerForm.removeEventListener('submit', this.handleRegister.bind(this));
+        }
+        if (this.irLoginLink) {
+            this.irLoginLink.removeEventListener('click', this.handleIrLogin.bind(this));
         }
     }
 }

@@ -1,0 +1,249 @@
+<section class="jobs-section">
+    <div class="jobs-section__filters">
+        <div class="jobs-section__filter-group jobs-section__filter-group--search">
+            <input type="text" class="jobs-section__search-input" placeholder="Search jobs">
+            <span class="jobs-section__search-icon">
+                <img src="frontend/assets/icons/search.svg" alt="Search icon">
+            </span>
+        </div>
+        
+        <button class="jobs-section__filter-button">
+            Locations
+            <span class="jobs-section__filter-icon">
+                <img src="frontend/assets/icons/keyboard_arrow_down.svg" alt="Dropdown arrow icon">
+            </span>
+        </button>
+        
+        <button class="jobs-section__filter-button">Full-time job</button>
+        <button class="jobs-section__filter-button">Internship</button>
+        <button class="jobs-section__filter-button">Part time</button>
+    </div>
+
+    <div class="jobs-section__content">
+        <div class="jobs-section__listing">
+            <div class="job-card">
+                <div class="job-card__header">
+                    <img class="job-card__logo" src="https://placehold.co/48x48/1D1B20/F3F3F3?text=Logo" alt="Company Logo">
+                    <div class="job-card__title-group">
+                        <h3 class="job-card__title">Lorem ipsum</h3>
+                        <p class="job-card__subtitle">Lorem ipsum</p>
+                    </div>
+                    <button class="job-card__action-icon job-card__action-icon--save">
+                        <img src="frontend/assets/icons/bookmark_filled.svg" alt="Save icon">
+                    </button>
+                    <button class="job-card__action-icon job-card__action-icon--apply">
+                        <img src="frontend/assets/icons/X.svg" alt="Apply icon">
+                    </button>
+                </div>
+                <div class="job-card__body">
+                    <p class="job-card__description">Remote Customer Support Agent<br/>$10/mo Part-time job</p>
+                    <p class="job-card__meta">Remote - 1 month ago</p>
+                </div>
+            </div>
+            <hr class="job-card__divider">
+
+            <div class="job-card">
+                <div class="job-card__header">
+                    <img class="job-card__logo" src="https://placehold.co/48x48/1D1B20/F3F3F3?text=Logo" alt="Company Logo">
+                    <div class="job-card__title-group">
+                        <h3 class="job-card__title">Lorem ipsum</h3>
+                        <p class="job-card__subtitle">Lorem ipsum</p>
+                    </div>
+                    <button class="job-card__action-icon job-card__action-icon--save">
+                        <img src="frontend/assets/icons/bookmark_filled.svg" alt="Save icon">
+                    </button>
+                    <button class="job-card__action-icon job-card__action-icon--apply">
+                        <img src="frontend/assets/icons/X.svg" alt="Apply icon">
+                    </button>
+                </div>
+                <div class="job-card__body">
+                    <p class="job-card__description">Remote Customer Support Agent<br/>$10/mo Part-time job</p>
+                    <p class="job-card__meta">Remote - 1 month ago</p>
+                </div>
+            </div>
+            <hr class="job-card__divider">
+
+            <div class="job-card">
+                <div class="job-card__header">
+                    <img class="job-card__logo" src="https://placehold.co/48x48/1D1B20/F3F3F3?text=Logo" alt="Company Logo">
+                    <div class="job-card__title-group">
+                        <h3 class="job-card__title">Lorem ipsum</h3>
+                        <p class="job-card__subtitle">Lorem ipsum</p>
+                    </div>
+                    <button class="job-card__action-icon job-card__action-icon--save">
+                        <img src="frontend/assets/icons/bookmark_filled.svg" alt="Save icon">
+                    </button>
+                    <button class="job-card__action-icon job-card__action-icon--apply">
+                        <img src="frontend/assets/icons/X.svg" alt="Apply icon">
+                    </button>
+                </div>
+                <div class="job-card__body">
+                    <p class="job-card__description">Remote Customer Support Agent<br/>$10/mo Part-time job</p>
+                    <p class="job-card__meta">Remote - 1 month ago</p>
+                </div>
+            </div>
+            <hr class="job-card__divider">
+
+            <div class="job-card">
+                <div class="job-card__header">
+                    <img class="job-card__logo" src="https://placehold.co/48x48/1D1B20/F3F3F3?text=Logo" alt="Company Logo">
+                    <div class="job-card__title-group">
+                        <h3 class="job-card__title">Lorem ipsum</h3>
+                        <p class="job-card__subtitle">Lorem ipsum</p>
+                    </div>
+                    <button class="job-card__action-icon job-card__action-icon--save">
+                        <img src="frontend/assets/icons/bookmark_filled.svg" alt="Save icon">
+                    </button>
+                    <button class="job-card__action-icon job-card__action-icon--apply">
+                        <img src="frontend/assets/icons/X.svg" alt="Apply icon">
+                    </button>
+                </div>
+                <div class="job-card__body">
+                    <p class="job-card__description">Remote Customer Support Agent<br/>$10/mo Part-time job</p>
+                    <p class="job-card__meta">Remote - 1 month ago</p>
+                </div>
+            </div>
+            <hr class="job-card__divider">
+
+            <div class="job-card">
+                <div class="job-card__header">
+                    <img class="job-card__logo" src="https://placehold.co/48x48/1D1B20/F3F3F3?text=Logo" alt="Company Logo">
+                    <div class="job-card__title-group">
+                        <h3 class="job-card__title">Lorem ipsum</h3>
+                        <p class="job-card__subtitle">Lorem ipsum</p>
+                    </div>
+                    <button class="job-card__action-icon job-card__action-icon--save">
+                        <img src="frontend/assets/icons/bookmark_filled.svg" alt="Save icon">
+                    </button>
+                    <button class="job-card__action-icon job-card__action-icon--apply">
+                        <img src="frontend/assets/icons/X.svg" alt="Apply icon">
+                    </button>
+                </div>
+                <div class="job-card__body">
+                    <p class="job-card__description">Remote Customer Support Agent<br/>$10/mo Part-time job</p>
+                    <p class="job-card__meta">Remote - 1 month ago</p>
+                </div>
+            </div>
+            <hr class="job-card__divider">
+        </div>
+
+        <div class="jobs-section__detail">
+            <div class="job-detail__header">
+                <img class="job-detail__logo" src="https://placehold.co/48x48/1D1B20/F3F3F3?text=Logo" alt="Company Logo">
+                <div class="job-detail__title-group">
+                    <h3 class="job-detail__company-name">Lorem ipsum</h3>
+                    <p class="job-detail__company-location">Lorem ipsum</p>
+                </div>
+            </div>
+
+            <div class="job-detail__title-info">
+                <h2 class="job-detail__title">Remote Customer Support Agent</h2>
+                <p class="job-detail__posted-info">Posted 1 week ago - Apply by July 16, 2025 at 7:00 AM</p>
+            </div>
+
+            <div class="job-detail__actions">
+                <button class="job-detail__action-button job-detail__action-button--save">
+                    <span class="job-detail__action-icon">
+                        <img src="frontend/assets/icons/bookmark_filled.svg" alt="Save icon">
+                    </span>
+                    Save
+                </button>
+                <button class="job-detail__action-button job-detail__action-button--apply">
+                    <span class="job-detail__action-icon">
+                        <img src="frontend/assets/icons/external_link.svg" alt="Apply icon">
+                    </span>
+                    Apply externally
+                </button>
+                <button class="job-detail__action-button job-detail__action-button--share">
+                    <span class="job-detail__action-icon">
+                        <img src="frontend/assets/icons/more_horiz.svg" alt="Share icon"> </span>
+                </button>
+            </div>
+
+            <hr class="job-detail__divider">
+
+            <div class="job-detail__section">
+                <h3 class="job-detail__section-title">At a glance</h3>
+                <div class="job-detail__glance-items">
+                    <div class="job-detail__glance-item">
+                        <span class="job-detail__glance-icon">
+                            <img src="frontend/assets/icons/credit_card.svg" alt="Salary icon">
+                        </span>
+                        <p class="job-detail__glance-text">
+                            <span class="job-detail__glance-text--bold">$23.10–34.66/hr</span><br/>
+                            Medical, dental, and vision coverage plus paid time off
+                        </p>
+                    </div>
+                    <div class="job-detail__glance-item">
+                        <span class="job-detail__glance-icon">
+                            <img src="frontend/assets/icons/location_on.svg" alt="Location icon">
+                        </span>
+                        <p class="job-detail__glance-text">
+                            <span class="job-detail__glance-text--bold">Remote, based in United States</span><br/>
+                            Work from home
+                        </p>
+                    </div>
+                    <div class="job-detail__glance-item">
+                        <span class="job-detail__glance-icon">
+                            <img src="frontend/assets/icons/jobs.svg" alt="Job type icon"> </span>
+                        <p class="job-detail__glance-text">
+                            <span class="job-detail__glance-text--bold">Job</span><br/>
+                            Full time
+                        </p>
+                    </div>
+                    <div class="job-detail__glance-item">
+                        <span class="job-detail__glance-icon">
+                            <img src="frontend/assets/icons/file_text.svg" alt="Checkmark icon">
+                        </span>
+                        <p class="job-detail__glance-text job-detail__glance-text--bold">US work authorization required</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="job-detail__divider">
+
+            <div class="job-detail__section">
+                <h3 class="job-detail__section-title">About</h3>
+                <p class="job-detail__about-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae augue auctor, rutrum velit a, mollis est. Phasellus efficitur efficitur pharetra. Praesent iaculis pretium iaculis. Mauris luctus arcu sodales elit accumsan fermentum. Donec cursus tempor mauris, et ultricies ante pharetra at. Donec eu mauris a magna bibendum ornare a vitae orci. Nullam ac tincidunt diam.</p>
+                <button class="job-detail__read-more">
+                    More
+                    <span class="job-detail__read-more-icon">
+                        <img src="frontend/assets/icons/keyboard_arrow_down.svg" alt="Read more arrow icon">
+                    </span>
+                </button>
+            </div>
+
+            <hr class="job-detail__divider">
+
+            <div class="job-detail__section">
+                <h3 class="job-detail__section-title">What this job offers</h3>
+                <ul class="job-detail__offer-list">
+                    <li class="job-detail__offer-item">$23.10–34.66/hr</li>
+                    <li class="job-detail__offer-item">Paid time off</li>
+                    <li class="job-detail__offer-item">Parental leave</li>
+                    <li class="job-detail__offer-item">Medical, dental, and vision coverage</li>
+                    <li class="job-detail__offer-item">Paid sick leave</li>
+                    <li class="job-detail__offer-item">401(k) match</li>
+                </ul>
+            </div>
+
+            <hr class="job-detail__divider">
+
+            <div class="job-detail__section">
+                <h3 class="job-detail__section-title">About the employer</h3>
+                <div class="job-detail__employer-header">
+                    <img class="job-detail__employer-logo" src="https://placehold.co/48x48/1D1B20/F3F3F3?text=Logo" alt="Employer Logo">
+                    <div class="job-detail__employer-info">
+                        <h4 class="job-detail__employer-name">Lorem ipsum</h4>
+                        <p class="job-detail__employer-location">Lorem ipsum</p>
+                    </div>
+                    <button class="job-detail__action-button job-detail__action-button--follow">
+
+                        Follow
+                    </button>
+                </div>
+                <p class="job-detail__employer-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae augue auctor, rutrum velit a, mollis est. Phasellus efficitur efficitur pharetra. Praesent iaculis pretium iaculis. Mauris luctus arcu sodales elit accumsan fermentum. Donec cursus tempor mauris, et ultricies ante pharetra at. Donec eu mauris a magna bibendum ornare a vitae orci. Nullam ac tincidunt diam.</p>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,5 +1,5 @@
 class BaseHTMLElement extends HTMLElement {
-    constructor() {
+    constructor(){
         super();
     }
 
@@ -11,3 +11,5 @@ class BaseHTMLElement extends HTMLElement {
 }
 
 export default BaseHTMLElement;
+
+

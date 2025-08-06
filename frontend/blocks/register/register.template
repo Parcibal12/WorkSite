@@ -1,29 +1,32 @@
-<section class="register">
-    <div class="register__card">
-        <h2 class="register__title">REGISTER</h2>
+<section class="register"> <!-- Clase principal: 'register' -->
+    <div class="register__card"> <!-- Clase de la tarjeta: 'register__card' -->
+        <h2 class="register__title">REGISTER</h2> <!-- Clase del título: 'register__title' -->
 
-        <form id="registerForm" class="register__form">
-            <div class="register__form-group">
-                <label for="username" class="register__label">User name:</label>
-                <input type="text" id="username" class="register__input" placeholder="Enter your username" required>
+        <form id="registerForm" class="register__form"> <!-- Clase del formulario: 'register__form' -->
+            <div class="register__form-group"> <!-- Clase del grupo de formulario: 'register__form-group' -->
+                <label for="username" class="register__label">Username:</label> <!-- Clase del label: 'register__label' -->
+                <input type="text" id="username" name="username" class="register__input" placeholder="Enter your username" required> <!-- Clase del input: 'register__input' -->
+                <p id="username-error" class="register__input-error"></p> <!-- Clase del error de input: 'register__input-error' -->
             </div>
-
+            
             <div class="register__form-group">
                 <label for="email" class="register__label">Email:</label>
-                <input type="email" id="email" class="register__input" placeholder="Enter your email" required>
+                <input type="email" id="email" name="email" class="register__input" placeholder="Enter your email" required>
+                <p id="email-error" class="register__input-error"></p>
             </div>
 
             <div class="register__form-group">
                 <label for="password" class="register__label">Password:</label>
-                <input type="password" id="password" class="register__input" placeholder="Enter your password" required>
+                <input type="password" id="password" name="password" class="register__input" placeholder="Enter your password" required>
+                <p id="password-error" class="register__input-error"></p>
             </div>
 
-            <button type="submit" class="register__button">REGISTER</button>
+            <button type="submit" class="register__button">REGISTER</button> <!-- Clase del botón: 'register__button' -->
         </form>
-        <p id="message" class="register__message"></p>
 
-        <p class="register__login-option">
-            <a href="#" class="register__login-link">Go to login?</a>
+        <p id="message" class="register__message"></p> <!-- Clase del mensaje general: 'register__message' -->
+        <p class="register__login-option"> <!-- Clase de la opción de login: 'register__login-option' -->
+            <a href="#" id="IrLogin" class="register__login-link">Go to login?</a> <!-- Clase del enlace: 'register__login-link' -->
         </p>
     </div>
 </section>

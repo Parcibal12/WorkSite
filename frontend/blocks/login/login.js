@@ -1,10 +1,14 @@
 import BaseHTMLElement from "../base/BaseHTMLElement.js";
+import ValidatorForm from "../../services/validators/ValidatorForm.js";
+import ValidatorLoginForm from "../../services/validators/ValidatorLoginForm.js";
+import authService from "../../services/AuthService.js";
+
+const loginValidator = new ValidatorForm(new ValidatorLoginForm());
 
 class LoginSectionComponent extends BaseHTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.backendUrl = "http://localhost:3000";
     }
 
     connectedCallback() {
@@ -19,16 +23,14 @@ class LoginSectionComponent extends BaseHTMLElement {
         styleLink.setAttribute('href', '/frontend/blocks/login/login.css');
         this.shadowRoot.appendChild(styleLink);
 
-        const pageTitleElement = document.getElementById("page-title");
-        if (pageTitleElement) {
-            pageTitleElement.textContent = "Login";
-        }
-
         this.loginForm = this.shadowRoot.getElementById('loginForm');
         this.emailInput = this.shadowRoot.getElementById('email');
         this.passwordInput = this.shadowRoot.getElementById('password');
         this.messageElement = this.shadowRoot.getElementById('message');
         this.irRegisterLink = this.shadowRoot.getElementById('IrRegister');
+
+        this.emailErrorElement = this.shadowRoot.getElementById('email-error');
+        this.passwordErrorElement = this.shadowRoot.getElementById('password-error');
 
         if (this.loginForm) {
             this.loginForm.addEventListener('submit', this.handleLogin.bind(this));
@@ -39,43 +41,71 @@ class LoginSectionComponent extends BaseHTMLElement {
         }
     }
 
+    clearFieldErrors() {
+        this.emailInput.classList.remove('input--error');
+        this.passwordInput.classList.remove('input--error');
+
+        if (this.emailErrorElement) this.emailErrorElement.textContent = '';
+        if (this.passwordErrorElement) this.passwordErrorElement.textContent = '';
+    }
+
+    displayFieldErrors(errors) {
+        this.clearFieldErrors();
+
+        if (errors.email) {
+            this.emailInput.classList.add('input--error');
+            if (this.emailErrorElement) this.emailErrorElement.textContent = errors.email;
+        }
+        if (errors.password) {
+            this.passwordInput.classList.add('input--error');
+            if (this.passwordErrorElement) this.passwordErrorElement.textContent = errors.password;
+        }
+    }
+
     async handleLogin(event) {
         event.preventDefault();
 
         this.messageElement.textContent = '';
         this.messageElement.className = 'login__message';
+        this.clearFieldErrors();
 
         const email = this.emailInput.value;
         const password = this.passwordInput.value;
 
-        const response = await fetch(`${this.backendUrl}/api/auth/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-        });
+        const formData = { email, password };
 
-        const data = await response.json();
+        const errors = loginValidator.validate(formData);
 
-        if (response.ok) {
-            this.messageElement.textContent = data.message || 'Inicio de sesión exitoso.';
-            this.messageElement.classList.add('login__message--success');
-            localStorage.setItem('jwtToken', data.token);
-            localStorage.setItem('currentUser', JSON.stringify(data.user));
+        if (errors) {
+            this.displayFieldErrors(errors);
+            this.showMessage('Please correct the errors', 'error');
+            return;
+        }
+
+        const data = await authService.login({ email, password });
+
+        if (data && data.generalError) {
+            this.showMessage(data.generalError, 'error');
+        } else if (data) {
+            this.showMessage(data.message || 'Successful Login', 'success');
+            document.body.dispatchEvent(new CustomEvent('navigate', { detail: { page: 'explore' } }));
         } else {
-            this.messageElement.textContent = data.message || 'Error en el inicio de sesión.';
-            this.messageElement.classList.add('login__message--error');
+            this.showMessage('Error in Login', 'error');
         }
     }
 
     handleIrRegister(event) {
         event.preventDefault();
-        document.body.dispatchEvent(new CustomEvent('navigate', { 
+        document.body.dispatchEvent(new CustomEvent('navigate', {
             bubbles: true,
             composed: true,
             detail: { page: 'register' }
         }));
+    }
+
+    showMessage(message, type) {
+        this.messageElement.textContent = message;
+        this.messageElement.className = `login__message login__message--${type}`;
     }
 
     disconnectedCallback() {
