@@ -1,0 +1,81 @@
+.inbox-template {
+  display: flex;
+  height: 100vh;
+  color: white;
+  font-family: 'SF Pro', 'Roboto', sans-serif;
+  background-color: black;
+}
+
+.inbox-template__left-panel {
+  display: flex;
+  flex-direction: column;
+  width: 420px;
+  border-right: 1px solid #1D1D1D;
+}
+
+.inbox-template__filters {
+  display: flex;
+  padding: 16px 0;
+  border-bottom: 1px solid #1D1D1D;
+}
+
+.inbox-template__filter-button {
+  background-color: transparent;
+  color: white;
+  border: 1px solid white;
+  padding: 8px 24px;
+  margin-right: 0px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.inbox-template__filter-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.inbox-template__filter-button--active {
+  background-color: white;
+  color: black;
+}
+
+.inbox-template__no-messages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.inbox-template__no-messages-text {
+  color: #F78E8E;
+  font-size: 16px;
+}
+
+.inbox-template__right-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  border-left: 1px solid white;
+}
+
+.inbox-template__no-conversation {
+  text-align: center;
+}
+
+.inbox-template__no-conversation-icon {
+  margin-bottom: 20px;
+}
+
+.inbox-template__no-conversation-title {
+  font-size: 20px;
+  font-weight: 400;
+  margin: 0 0 8px 0;
+}
+
+.inbox-template__no-conversation-subtitle {
+  font-size: 16px;
+  color: #8c8c8c;
+  max-width: 410px;
+  margin: 0;
+}

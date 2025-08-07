@@ -1,0 +1,22 @@
+<section class="inbox-template">
+    <div class="inbox-template__left-panel">
+        <div class="inbox-template__filters">
+            <button class="inbox-template__filter-button inbox-template__filter-button--active">All</button>
+            <button class="inbox-template__filter-button">Unread</button>
+            <button class="inbox-template__filter-button">Archived</button>
+        </div>
+        
+        <div class="inbox-template__no-messages">
+            <p class="inbox-template__no-messages-text">No messages</p>
+        </div>
+    </div>
+
+    <div class="inbox-template__right-panel">
+        <div class="inbox-template__no-conversation">
+            <img class="inbox-template__no-conversation-icon" src="/frontend/assets/icons/message_squere.svg" alt="Message icon">
+            
+            <h3 class="inbox-template__no-conversation-title">Stay connected</h3>
+            <p class="inbox-template__no-conversation-subtitle">Reply to employers and manage conversations in your network</p>
+        </div>
+    </div>
+</section>

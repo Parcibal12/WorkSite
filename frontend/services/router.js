@@ -5,6 +5,8 @@ import '/frontend/blocks/events/events.js';
 import '/frontend/blocks/register/register.js';
 import '/frontend/blocks/login/login.js';
 import '/frontend/blocks/jobs/jobs.js';
+import '/frontend/blocks/inbox/inbox.js';
+
 
 const Router = {
     init: () => {
@@ -63,6 +65,11 @@ const Router = {
                 pageComponent = document.createElement("jobs-section");
                 pageTitle = "Jobs";
                 break;
+            case "/inbox":
+                pageComponent = document.createElement("inbox-section");
+                pageTitle = "Inbox";
+                break;
+
             
 
             default:
