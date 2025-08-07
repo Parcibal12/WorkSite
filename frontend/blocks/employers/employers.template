@@ -1,0 +1,58 @@
+<section class="employers-template">
+    <div class="employers-template__toolbar">
+        <div class="employers-template__search">
+            <img src="/frontend/assets/icons/search.svg" alt="Search Icon" class="employers-template__search-icon">
+            <input type="text" class="employers-template__search-input" placeholder="Search">
+        </div>
+        
+        <button class="employers-template__button">
+            Employers you follow
+        </button>
+        
+        <button class="employers-template__button employers-template__button--dropdown">
+            Location
+            <img src="/frontend/assets/icons/keyboard_arrow_down.svg" alt="Dropdown Icon" class="employers-template__dropdown-icon">
+        </button>
+        
+        <button class="employers-template__button employers-template__button--dropdown">
+            Industry
+            <img src="/frontend/assets/icons/keyboard_arrow_down.svg" alt="Dropdown Icon" class="employers-template__dropdown-icon">
+        </button>
+    </div>
+
+    <ul class="employers-template__list">
+        <li class="employers-template__list-item">
+            <img src="/frontend/assets/icons/Image.svg" alt="Employer Logo" class="employers-template__logo">
+            <div class="employers-template__content">
+                <h4 class="employers-template__company-name">Lorem ipsum</h4>
+                <p class="employers-template__job-description">Remote Customer Suport Agent</p>
+            </div>
+            <button class="employers-template__follow-button">
+                Follow
+            </button>
+        </li>
+        <hr class="employers-template__separator">
+        <li class="employers-template__list-item">
+            <img src="/frontend/assets/icons/Image.svg" alt="Employer Logo" class="employers-template__logo">
+            <div class="employers-template__content">
+                <h4 class="employers-template__company-name">Lorem ipsum</h4>
+                <p class="employers-template__job-description">Remote Customer Suport Agent</p>
+            </div>
+            <button class="employers-template__follow-button">
+                Follow
+            </button>
+        </li>
+        <hr class="employers-template__separator">
+        <li class="employers-template__list-item">
+            <img src="/frontend/assets/icons/Image.svg" alt="Employer Logo" class="employers-template__logo">
+            <div class="employers-template__content">
+                <h4 class="employers-template__company-name">Lorem ipsum</h4>
+                <p class="employers-template__job-description">Remote Customer Suport Agent</p>
+            </div>
+            <button class="employers-template__follow-button">
+                Follow
+            </button>
+        </li>
+        <hr class="employers-template__separator">
+    </ul>
+</section>

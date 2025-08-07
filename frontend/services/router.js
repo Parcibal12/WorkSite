@@ -6,6 +6,8 @@ import '/frontend/blocks/register/register.js';
 import '/frontend/blocks/login/login.js';
 import '/frontend/blocks/jobs/jobs.js';
 import '/frontend/blocks/inbox/inbox.js';
+import '/frontend/blocks/employers/employers.js';
+
 
 
 const Router = {
@@ -69,6 +71,11 @@ const Router = {
                 pageComponent = document.createElement("inbox-section");
                 pageTitle = "Inbox";
                 break;
+            case "/employers":
+                pageComponent = document.createElement("employers-section");
+                pageTitle = "Employers";
+                break;
+
 
             
 
