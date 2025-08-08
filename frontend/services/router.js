@@ -8,8 +8,6 @@ import '/frontend/blocks/jobs/jobs.js';
 import '/frontend/blocks/inbox/inbox.js';
 import '/frontend/blocks/employers/employers.js';
 
-
-
 const Router = {
     init: () => {
         document.body.addEventListener("navigate", (event) => {
@@ -36,6 +34,15 @@ const Router = {
             if (location.pathname !== route) {
                 history.pushState({ route }, "", route);
             }
+        }
+
+        const appContainer = document.getElementById('app-container');
+        const isAuthRoute = route === "/login" || route === "/register";
+
+        if (isAuthRoute) {
+            appContainer.classList.add('login-mode');
+        } else {
+            appContainer.classList.remove('login-mode');
         }
 
         let pageComponent = null;
@@ -75,9 +82,6 @@ const Router = {
                 pageComponent = document.createElement("employers-section");
                 pageTitle = "Employers";
                 break;
-
-
-            
 
             default:
                 pageComponent = document.createElement("div");

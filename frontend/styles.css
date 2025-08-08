@@ -141,3 +141,25 @@ input, button, select, textarea {
     z-index: 80;
     background-color: var(--color-borde-divisor);
 }
+
+
+#app-container.login-mode sidebar-component {
+    display: none;
+}
+
+#app-container.login-mode .main-content__header,
+#app-container.login-mode .separador--header {
+    display: none;
+}
+
+#app-container.login-mode .main-content {
+    padding: 0;
+    width: 100%;
+    flex-grow: 1;
+}
+
+#app-container.login-mode #content-area {
+    padding-top: 0;
+    width: 100%;
+    flex-grow: 1;
+}
