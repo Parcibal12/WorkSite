@@ -30,10 +30,16 @@ class RegisterSectionComponent extends BaseHTMLElement {
 
         this.messageElement = this.shadowRoot.getElementById('message');
         this.irLoginLink = this.shadowRoot.getElementById('IrLogin');
+        
+        this.logoButton = this.shadowRoot.querySelector('.register__logo-link');
 
         this.usernameErrorElement = this.shadowRoot.getElementById('username-error');
         this.emailErrorElement = this.shadowRoot.getElementById('email-error');
         this.passwordErrorElement = this.shadowRoot.getElementById('password-error');
+
+        if (this.logoButton) {
+            this.logoButton.addEventListener('click', this.handleLogoClick.bind(this));
+        }
 
         if (this.registerForm) {
             this.registerForm.addEventListener('submit', this.handleRegister.bind(this));
@@ -42,6 +48,15 @@ class RegisterSectionComponent extends BaseHTMLElement {
         if (this.irLoginLink) {
             this.irLoginLink.addEventListener('click', this.handleIrLogin.bind(this));
         }
+    }
+
+    handleLogoClick(event) {
+        event.preventDefault();
+        document.body.dispatchEvent(new CustomEvent('navigate', {
+            bubbles: true,
+            composed: true,
+            detail: { page: 'explore' }
+        }));
     }
 
     clearFieldErrors() {
@@ -63,7 +78,7 @@ class RegisterSectionComponent extends BaseHTMLElement {
         }
         if (errors.email) {
             this.emailInput.classList.add('input--error');
-            if (this.emailErrorElement) this.emailInput.textContent = errors.email;
+            if (this.emailErrorElement) this.emailErrorElement.textContent = errors.email;
         }
         if (errors.password) {
             this.passwordInput.classList.add('input--error');
@@ -120,6 +135,10 @@ class RegisterSectionComponent extends BaseHTMLElement {
     }
 
     disconnectedCallback() {
+        if (this.logoButton) {
+            this.logoButton.removeEventListener('click', this.handleLogoClick.bind(this));
+        }
+
         if (this.registerForm) {
             this.registerForm.removeEventListener('submit', this.handleRegister.bind(this));
         }

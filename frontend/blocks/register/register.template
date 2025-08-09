@@ -1,7 +1,11 @@
 <section class="register">
+    <div class="register__header">
+        <a href="/explore" class="register__logo-link">
+            <img class="register__logo-img" src="/frontend/assets/logo.png" alt="Logo de WorkSite">
+        </a>
+    </div>
     <div class="register__card">
         <h2 class="register__title">REGISTER</h2>
-
         <form id="registerForm" class="register__form">
             <div class="register__form-group">
                 <label for="username" class="register__label">Username:</label>

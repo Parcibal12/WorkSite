@@ -11,7 +11,7 @@ class SidebarComponent extends BaseHTMLElement {
     }
 
     async init() {
-        await this.loadHTML("/frontend/blocks/sidebar/sidebar.template"); 
+        await this.loadHTML("/frontend/blocks/sidebar/sidebar.template");
         
         const styleLink = document.createElement('link');
         styleLink.setAttribute('rel', 'stylesheet');
@@ -23,6 +23,20 @@ class SidebarComponent extends BaseHTMLElement {
     }
 
     setupEventListeners() {
+        const logoButton = this.shadowRoot.querySelector('.sidebar-header');
+        if (logoButton) {
+            logoButton.addEventListener('click', () => {
+                document.body.dispatchEvent(
+                    new CustomEvent('navigate', {
+                        detail: { page: 'explore' }
+                    })
+                );
+                this.setActiveItemFromUrl();
+            });
+
+            logoButton.style.cursor = 'pointer';
+        }
+
         const navLinks = this.shadowRoot.querySelectorAll('.nav-menu__link');
         navLinks.forEach(link => {
             link.addEventListener('click', (event) => {
@@ -72,7 +86,6 @@ class SidebarComponent extends BaseHTMLElement {
     }
 
     disconnectedCallback() {
-
     }
 }
 

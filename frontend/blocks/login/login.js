@@ -29,9 +29,15 @@ class LoginSectionComponent extends BaseHTMLElement {
         this.messageElement = this.shadowRoot.getElementById('message');
         this.irRegisterLink = this.shadowRoot.getElementById('IrRegister');
 
+        this.logoButton = this.shadowRoot.querySelector('.login__logo-link');
+
         this.emailErrorElement = this.shadowRoot.getElementById('email-error');
         this.passwordErrorElement = this.shadowRoot.getElementById('password-error');
 
+
+        if (this.logoButton) {
+            this.logoButton.addEventListener('click', this.handleLogoClick.bind(this));
+        }
         if (this.loginForm) {
             this.loginForm.addEventListener('submit', this.handleLogin.bind(this));
         }
@@ -39,6 +45,15 @@ class LoginSectionComponent extends BaseHTMLElement {
         if (this.irRegisterLink) {
             this.irRegisterLink.addEventListener('click', this.handleIrRegister.bind(this));
         }
+    }
+
+    handleLogoClick(event) {
+        event.preventDefault();
+        document.body.dispatchEvent(new CustomEvent('navigate', {
+            bubbles: true,
+            composed: true,
+            detail: { page: 'explore' }
+        }));
     }
 
     clearFieldErrors() {
@@ -109,6 +124,9 @@ class LoginSectionComponent extends BaseHTMLElement {
     }
 
     disconnectedCallback() {
+        if (this.logoButton) {
+            this.logoButton.removeEventListener('click', this.handleLogoClick.bind(this));
+        }
         if (this.loginForm) {
             this.loginForm.removeEventListener('submit', this.handleLogin.bind(this));
         }
