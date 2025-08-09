@@ -296,7 +296,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    outline: 1px solid white;
     outline-offset: -1px;
 }
 .job-detail__glance-icon svg {

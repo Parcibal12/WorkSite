@@ -35,7 +35,7 @@
 .feed-filters__button {
     background-color: var(--feed-button-inactive-bg);
     border: 1px solid var(--feed-button-inactive-border);
-    border-radius: var(--feed-border-radius-small);
+    border-radius: 5px;
     color: var(--feed-text-color);
     padding: 8px 16px;
     font-size: 16px;
@@ -44,8 +44,8 @@
 }
 
 .feed-filters__button:hover {
-    background-color: #3a3a3a;
-    border-color: #666666;
+    background-color: #ffffff;
+    color: #000000;
 }
 
 
@@ -201,7 +201,7 @@
     width: 100%;
     background: none;
     border: none;
-    color: var(--feed-text-color);
+    color: #ffffff;
     font-size: 16px;
     outline: none;
     padding: 0;
