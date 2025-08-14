@@ -12,4 +12,3 @@ class BaseHTMLElement extends HTMLElement {
 
 export default BaseHTMLElement;
 
-

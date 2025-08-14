@@ -1,7 +1,5 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
-const User = require('./userModel');
-const Institution = require('./institutionModel');
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/database.js';
 
 const Event = sequelize.define('Event', {
     id: {
@@ -12,18 +10,10 @@ const Event = sequelize.define('Event', {
     organizer_id: {
         type: DataTypes.UUID,
         allowNull: false,
-        references: {
-            model: User,
-            key: 'id',
-        },
     },
     institution_id: {
         type: DataTypes.UUID,
         allowNull: true,
-        references: {
-            model: Institution,
-            key: 'id',
-        },
     },
     title: {
         type: DataTypes.STRING,
@@ -47,19 +37,9 @@ const Event = sequelize.define('Event', {
         type: DataTypes.DATE,
         allowNull: false,
     },
-    createdAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW,
-    },
-    updatedAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW,
-    },
 }, {
     tableName: 'events',
-    timestamps: false,
+    timestamps: true,
 });
 
-module.exports = Event;
+export { Event };

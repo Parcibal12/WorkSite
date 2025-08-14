@@ -1,14 +1,17 @@
-const express = require('express');
+import express from 'express';
+import eventController from '../controllers/eventController.js';
+import { protect } from '../middleware/authMiddleware.js'; 
+
 const router = express.Router();
-const eventController = require('../controllers/eventController');
-const authMiddleware = require('../middleware/authMiddleware');
+
 
 router.get('/', eventController.getAllEvents);
 
 router.get('/:id', eventController.getEventById);
 
-router.post('/', authMiddleware, eventController.createEvent);
+router.post('/', protect, eventController.createEvent);
 
-router.post('/:id/register', authMiddleware, eventController.registerForEvent);
+router.put('/:id/register', protect, eventController.registerForEvent);
 
-module.exports = router;
+
+export default router;

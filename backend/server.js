@@ -1,25 +1,33 @@
-require('dotenv').config();
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import sequelize from './src/config/database.js';
 
-const express = require('express');
-const cors = require('cors');
-const sequelize = require('./src/config/database');
+import { User } from './src/models/userModel.js';
+import { Event } from './src/models/eventModel.js';
+import { Institution } from './src/models/institutionModel.js';
+import { EventRegistration } from './src/models/eventRegistrationModel.js';
 
-const User = require('./src/models/userModel');
-const Event = require('./src/models/eventModel');
-const Institution = require('./src/models/institutionModel');
-const EventRegistration = require('./src/models/eventRegistrationModel');
+Event.belongsTo(User, { foreignKey: 'organizer_id', as: 'organizer' });
+User.hasMany(Event, { foreignKey: 'organizer_id', as: 'organizedEvents' });
 
-User.hasMany(Event, { foreignKey: 'organizer_id' });
-Event.belongsTo(User, { as: 'Organizer', foreignKey: 'organizer_id' });
+Event.belongsTo(Institution, { foreignKey: 'institution_id', as: 'institution' });
+Institution.hasMany(Event, { foreignKey: 'institution_id', as: 'events' });
 
-Institution.hasMany(Event, { foreignKey: 'institution_id' });
-Event.belongsTo(Institution, { foreignKey: 'institution_id' });
+Event.belongsToMany(User, {
+    through: EventRegistration,
+    foreignKey: 'event_id',
+    as: 'registeredUsers'
+});
+User.belongsToMany(Event, {
+    through: EventRegistration,
+    foreignKey: 'user_id',
+    as: 'registeredEvents'
+});
 
-User.belongsToMany(Event, { through: EventRegistration, foreignKey: 'user_id', as: 'RegisteredEvents' });
-Event.belongsToMany(User, { through: EventRegistration, foreignKey: 'event_id', as: 'RegisteredUsers' });
-
-const authRoutes = require('./src/routes/authRoutes');
-const eventRoutes = require('./src/routes/eventRoutes');
+import authRoutes from './src/routes/authRoutes.js';
+import eventRoutes from './src/routes/eventRoutes.js';
+import institutionRoutes from './src/routes/institutionRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -34,12 +42,9 @@ app.get('/', (req, res) => {
 app.get('/test-db', async (req, res) => {
     try {
         await sequelize.authenticate();
-        res.status(200).json({
-            message: 'connection successful',
-        });
+        res.status(200).end();
     } catch (error) {
         res.status(500).json({
-            message: 'error connecting to the database with Sequelize',
             error: error.message
         });
     }
@@ -47,15 +52,15 @@ app.get('/test-db', async (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/events', eventRoutes);
+app.use('/api/institutions', institutionRoutes);
 
 sequelize.sync({ alter: true })
     .then(() => {
         app.listen(PORT, () => {
-            console.log(`node.js server started on port ${PORT}`);
-            console.log(`access at: http://localhost:${PORT}`);
+            console.log(`Servidor de backend ejecutándose en http://localhost:${PORT}`);
         });
     })
     .catch(err => {
-        console.error('Could not connect to the database with Sequelize or sync models:', err);
+        console.error('Error al sincronizar la base de datos:', err);
         process.exit(1);
     });

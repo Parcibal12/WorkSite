@@ -1,28 +1,20 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
-const User = require('./userModel');
-const Event = require('./eventModel');
+// src/models/eventRegistrationModel.js
+
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/database.js';
 
 const EventRegistration = sequelize.define('EventRegistration', {
     user_id: {
         type: DataTypes.UUID,
-        references: {
-            model: User,
-            key: 'id',
-        },
         primaryKey: true,
     },
     event_id: {
         type: DataTypes.UUID,
-        references: {
-            model: Event,
-            key: 'id',
-        },
         primaryKey: true,
     },
 }, {
     tableName: 'event_registrations',
-    timestamps: true,
+    timestamps: false,
 });
 
-module.exports = EventRegistration;
+export { EventRegistration };

@@ -1,8 +1,8 @@
-const { Op } = require('sequelize');
-const Event = require('../models/eventModel');
-const Institution = require('../models/institutionModel');
-const User = require('../models/userModel');
-const EventRegistration = require('../models/eventRegistrationModel');
+import { Op } from 'sequelize';
+import { Event } from '../models/eventModel.js';
+import { Institution } from '../models/institutionModel.js';
+import { User } from '../models/userModel.js';
+import { EventRegistration } from '../models/eventRegistrationModel.js';
 
 const eventController = {
     getAllEvents: async (req, res) => {
@@ -11,16 +11,17 @@ const eventController = {
                 include: [
                     {
                         model: Institution,
+                        as: 'institution', 
                         attributes: ['name'],
                     },
                     {
                         model: User,
-                        as: 'Organizer',
+                        as: 'organizer', 
                         attributes: ['id', 'username', 'email'],
                     },
                     {
                         model: User,
-                        as: 'RegisteredUsers',
+                        as: 'registeredUsers', 
                         attributes: ['id'],
                         through: { attributes: [] }
                     }
@@ -33,18 +34,15 @@ const eventController = {
                 description: event.description,
                 location: event.location,
                 date: event.date,
-                organizer: event.Organizer,
-                institution_name: event.Institution ? event.Institution.name : null,
-                registered_count: event.RegisteredUsers.length,
+                organizer: event.organizer, 
+                institution_name: event.institution ? event.institution.name : null,
+                registered_count: event.registeredUsers.length,
             }));
 
-            res.status(200).json({
-                message: 'Events fetched successfully',
-                data: eventsWithCount
-            });
+            res.status(200).json(eventsWithCount);
         } catch (error) {
+            console.error('Error in getAllEvents:', error);
             res.status(500).json({
-                message: 'Internal server error while fetching events.',
                 error: error.message
             });
         }
@@ -57,16 +55,17 @@ const eventController = {
                 include: [
                     {
                         model: Institution,
+                        as: 'institution',
                         attributes: ['name'],
                     },
                     {
                         model: User,
-                        as: 'Organizer',
+                        as: 'organizer', 
                         attributes: ['id', 'username', 'email'],
                     },
                     {
                         model: User,
-                        as: 'RegisteredUsers',
+                        as: 'registeredUsers',
                         attributes: ['id'],
                         through: { attributes: [] }
                     }
@@ -74,7 +73,7 @@ const eventController = {
             });
 
             if (!event) {
-                return res.status(404).json({ message: 'Event not found.' });
+                return res.status(404).json({ error: 'event not found.' });
             }
 
             const eventWithCount = {
@@ -83,18 +82,14 @@ const eventController = {
                 description: event.description,
                 location: event.location,
                 date: event.date,
-                organizer: event.Organizer,
-                institution_name: event.Institution ? event.Institution.name : null,
-                registered_count: event.RegisteredUsers.length,
+                organizer: event.organizer, 
+                institution_name: event.institution ? event.institution.name : null,
+                registered_count: event.registeredUsers.length,
             };
 
-            res.status(200).json({
-                message: 'Event fetched successfully',
-                data: eventWithCount
-            });
+            res.status(200).json(eventWithCount);
         } catch (error) {
             res.status(500).json({
-                message: 'Internal server error while fetching event.',
                 error: error.message
             });
         }
@@ -105,41 +100,95 @@ const eventController = {
         let { title, description, location, date, institution_id } = req.body;
 
         if (!title || !description || !location || !date) {
-            return res.status(400).json({ message: 'All required fields are: title, description, location, and date' });
+            return res.status(400).json({ error: 'All required fields are: title, description, location, and date' });
         }
 
-        if (institution_id === "") {
-            institution_id = null;
-        }
-
-        try {
-            if (institution_id) {
+        if (institution_id) {
+            try {
                 const institution = await Institution.findByPk(institution_id);
                 if (!institution) {
-                    return res.status(404).json({ message: 'Institution not found.' });
+                    return res.status(404).json({ error: 'institution not found.' });
                 }
+            } catch (error) {
+                return res.status(400).json({ error: 'Invalid institution ID provided.' });
             }
-            
+        }
+        
+        try {
             const newEvent = await Event.create({
                 organizer_id,
-                institution_id,
+                institution_id: institution_id || null, 
                 title,
                 description,
                 location,
                 date
             });
 
-            res.status(201).json({
-                message: 'Event created successfully',
-                data: newEvent
-            });
+            res.status(201).json(newEvent);
         } catch (error) {
             if (error.name === 'SequelizeValidationError') {
                 const errors = error.errors.map(err => err.message);
-                return res.status(400).json({ message: 'Validation error: ' + errors.join(', ') });
+                return res.status(400).json({ error: 'Validation error: ' + errors.join(', ') });
             }
             res.status(500).json({
-                message: 'Internal server error while creating event',
+                error: error.message
+            });
+        }
+    },
+    
+    updateEvent: async (req, res) => {
+        const { id } = req.params;
+        const organizer_id = req.user.id;
+        const eventData = req.body;
+
+        try {
+            const event = await Event.findByPk(id);
+
+            if (!event) {
+                return res.status(404).json({ error: 'event not found' });
+            }
+
+            if (event.organizer_id !== organizer_id) {
+                return res.status(403).json({ error: 'You are not authorized to update this event' });
+            }
+
+            if (eventData.institution_id) {
+                const institution = await Institution.findByPk(eventData.institution_id);
+                if (!institution) {
+                    return res.status(404).json({ error: 'institution not found' });
+                }
+            }
+
+            await event.update(eventData);
+
+            res.status(200).json(event);
+        } catch (error) {
+            res.status(500).json({
+                error: error.message
+            });
+        }
+    },
+
+    deleteEvent: async (req, res) => {
+        const { id } = req.params;
+        const organizer_id = req.user.id;
+
+        try {
+            const event = await Event.findByPk(id);
+
+            if (!event) {
+                return res.status(404).json({ error: 'event not found' });
+            }
+
+            if (event.organizer_id !== organizer_id) {
+                return res.status(403).json({ error: 'You are not authorized to delete this event' });
+            }
+
+            await event.destroy();
+
+            res.status(200).end();
+        } catch (error) {
+            res.status(500).json({
                 error: error.message
             });
         }
@@ -152,7 +201,7 @@ const eventController = {
         try {
             const event = await Event.findByPk(event_id);
             if (!event) {
-                return res.status(404).json({ message: 'Event not found.' });
+                return res.status(404).json({ error: 'Event not found' });
             }
 
             const [registration, created] = await EventRegistration.findOrCreate({
@@ -161,20 +210,17 @@ const eventController = {
             });
 
             if (!created) {
-                return res.status(409).json({ message: 'User is already registered for this event.' });
+                return res.status(409).json({ error: 'User is already registered for this event' });
             }
 
-            res.status(201).json({
-                message: 'Successfully registered for the event'
-            });
+            res.status(201).end();
 
         } catch (error) {
             res.status(500).json({
-                message: 'Internal server error while registering for event',
                 error: error.message
             });
         }
     }
 };
 
-module.exports = eventController;
+export default eventController;
