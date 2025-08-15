@@ -20,39 +20,7 @@
         </button>
     </div>
 
+
     <ul class="employers-template__list">
-        <li class="employers-template__list-item">
-            <img src="/frontend/assets/icons/Image.svg" alt="Employer Logo" class="employers-template__logo">
-            <div class="employers-template__content">
-                <h4 class="employers-template__company-name">Lorem ipsum</h4>
-                <p class="employers-template__job-description">Remote Customer Suport Agent</p>
-            </div>
-            <button class="employers-template__follow-button">
-                Follow
-            </button>
-        </li>
-        <hr class="employers-template__separator">
-        <li class="employers-template__list-item">
-            <img src="/frontend/assets/icons/Image.svg" alt="Employer Logo" class="employers-template__logo">
-            <div class="employers-template__content">
-                <h4 class="employers-template__company-name">Lorem ipsum</h4>
-                <p class="employers-template__job-description">Remote Customer Suport Agent</p>
-            </div>
-            <button class="employers-template__follow-button">
-                Follow
-            </button>
-        </li>
-        <hr class="employers-template__separator">
-        <li class="employers-template__list-item">
-            <img src="/frontend/assets/icons/Image.svg" alt="Employer Logo" class="employers-template__logo">
-            <div class="employers-template__content">
-                <h4 class="employers-template__company-name">Lorem ipsum</h4>
-                <p class="employers-template__job-description">Remote Customer Suport Agent</p>
-            </div>
-            <button class="employers-template__follow-button">
-                Follow
-            </button>
-        </li>
-        <hr class="employers-template__separator">
     </ul>
 </section>
