@@ -6,6 +6,7 @@ class EventsSectionComponent extends BaseHTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+        this.allEvents = [];
     }
 
     connectedCallback() {
@@ -15,7 +16,8 @@ class EventsSectionComponent extends BaseHTMLElement {
     async init() {
         await this.loadHTML("/frontend/blocks/events/events.template");
         this.loadCSS("/frontend/blocks/events/events.css");
-        this.fetchAndRenderEvents();
+        await this.fetchAndRenderEvents();
+        this.searchBar();
     }
 
     loadCSS(path) {
@@ -35,27 +37,49 @@ class EventsSectionComponent extends BaseHTMLElement {
 
         try {
             const response = await fetch(`${API_URL_BASE}/api/events`);
-            
-            if (!response.ok) {
+            const events = await response.json(); // La llamada a .json() debe ir aquí
+
+            if (!response.ok || !Array.isArray(events)) {
                 return;
             }
 
-            const events = await response.json();
-
-            if (!Array.isArray(events)) {
-                return;
-            }
-
-            eventsGrid.innerHTML = '';
-            
-            if (events.length > 0) {
-                events.forEach(event => {
-                    const eventCard = this.createEventCard(event);
-                    eventsGrid.appendChild(eventCard);
-                });
-            }
-
+            this.allEvents = events;
+            this.renderEvents(this.allEvents);
         } catch (error) {
+            return;
+        }
+    }
+
+    searchBar() {
+        const searchInput = this.shadowRoot.querySelector('.search-bar__input');
+        if (searchInput) {
+            searchInput.addEventListener('input', (event) => {
+                const query = event.target.value.toLowerCase();
+                const filteredEvents = this.allEvents.filter(event => {
+                    const title = event.title ? event.title.toLowerCase() : '';
+                    const location = event.location ? event.location.toLowerCase() : '';
+                    return title.includes(query) || location.includes(query);
+                });
+                this.renderEvents(filteredEvents);
+            });
+        }
+    }
+
+    renderEvents(events) {
+        const eventsGrid = this.shadowRoot.querySelector('.events-grid');
+        if (!eventsGrid) {
+            return;
+        }
+
+        eventsGrid.innerHTML = '';
+
+        if (events.length === 0) {
+            eventsGrid.innerHTML = `<p class="text-center text-gray-500">No events available.</p>`;
+        } else {
+            events.forEach(event => {
+                const eventCard = this.createEventCard(event);
+                eventsGrid.appendChild(eventCard);
+            });
         }
     }
 
@@ -76,6 +100,9 @@ class EventsSectionComponent extends BaseHTMLElement {
             <p class="event-card__attendees">${event.registered_count} students registered</p>
         `;
         return article;
+    }
+
+    disconnectedCallback() {
     }
 }
 

@@ -6,6 +6,7 @@ class EmployersSectionComponent extends BaseHTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+        this.allEmployers = [];
     }
 
     connectedCallback() {
@@ -15,7 +16,8 @@ class EmployersSectionComponent extends BaseHTMLElement {
     async init() {
         await this.loadHTML("/frontend/blocks/employers/employers.template");
         this.loadCSS("/frontend/blocks/employers/employers.css");
-        this.fetchAndRenderEmployers();
+        await this.fetchAndRenderEmployers();
+        this.searchBar();
     }
 
     loadCSS(path) {
@@ -40,23 +42,50 @@ class EmployersSectionComponent extends BaseHTMLElement {
             if (!response.ok || !Array.isArray(employers)) {
                 return;
             }
-
-            if (employers.length > 0) {
-                employersList.innerHTML = '';
-                employers.forEach((employer, index) => {
-                    const employerListItem = this.createEmployerListItem(employer);
-                    employersList.appendChild(employerListItem);
-                    
-                    if (index < employers.length - 1) {
-                        const separator = document.createElement('hr');
-                        separator.className = 'employers-template__separator';
-                        employersList.appendChild(separator);
-                    }
-                });
-            }
+            
+            this.allEmployers = employers;
+            this.renderEmployers(this.allEmployers);
 
         } catch (error) {
             return;
+        }
+    }
+    
+    searchBar() {
+        const searchInput = this.shadowRoot.querySelector('.employers-template__search-input');
+        if (searchInput) {
+            searchInput.addEventListener('input', (event) => {
+                const query = event.target.value.toLowerCase();
+                const filteredEmployers = this.allEmployers.filter(employer => {
+                    const description = employer.description ? employer.description.toLowerCase() : '';
+                    return employer.name.toLowerCase().includes(query) || 
+                           description.includes(query);
+                });
+                this.renderEmployers(filteredEmployers);
+            });
+        }
+    }
+
+    renderEmployers(employers) {
+        const employersList = this.shadowRoot.querySelector('.employers-template__list');
+        if (!employersList) {
+            return;
+        }
+
+        employersList.innerHTML = '';
+        if (employers.length === 0) {
+            employersList.innerHTML = `<li class="text-center text-gray-500">No employers available.</li>`;
+        } else {
+            employers.forEach((employer, index) => {
+                const employerListItem = this.createEmployerListItem(employer);
+                employersList.appendChild(employerListItem);
+                
+                if (index < employers.length - 1) {
+                    const separator = document.createElement('hr');
+                    separator.className = 'employers-template__separator';
+                    employersList.appendChild(separator);
+                }
+            });
         }
     }
 
