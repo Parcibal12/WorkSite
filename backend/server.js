@@ -7,6 +7,7 @@ import { User } from './src/models/userModel.js';
 import { Event } from './src/models/eventModel.js';
 import { Institution } from './src/models/institutionModel.js';
 import { EventRegistration } from './src/models/eventRegistrationModel.js';
+import { Job } from './src/models/jobModel.js';
 
 Event.belongsTo(User, { foreignKey: 'organizer_id', as: 'organizer' });
 User.hasMany(Event, { foreignKey: 'organizer_id', as: 'organizedEvents' });
@@ -28,6 +29,7 @@ User.belongsToMany(Event, {
 import authRoutes from './src/routes/authRoutes.js';
 import eventRoutes from './src/routes/eventRoutes.js';
 import institutionRoutes from './src/routes/institutionRoutes.js';
+import jobRoutes from './src/routes/jobRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -53,6 +55,7 @@ app.get('/test-db', async (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/institutions', institutionRoutes);
+app.use('/api/jobs', jobRoutes);
 
 sequelize.sync({ alter: true })
     .then(() => {
