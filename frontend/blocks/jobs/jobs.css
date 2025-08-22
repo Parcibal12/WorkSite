@@ -152,6 +152,28 @@
     height: 100%;
     stroke: white;
 }
+
+
+.job-card__action-icon--save .save-icon,
+.job-detail__action-button--save .save-icon {
+}
+
+.job-card__action-icon--save.is-saved .save-icon {
+    filter: invert(1);
+}
+
+.job-detail__action-button--save.is-saved {
+    background-color: white;
+    color: black;
+    border-color: white;
+}
+
+.job-detail__action-button--save.is-saved .save-icon {
+    filter: none;
+}
+
+
+
 .job-card__body {
     display: flex;
     flex-direction: column;

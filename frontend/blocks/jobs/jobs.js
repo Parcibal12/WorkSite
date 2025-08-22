@@ -1,4 +1,10 @@
+// frontend/blocks/jobs/jobs.js
+
 import BaseHTMLElement from "../base/BaseHTMLElement.js";
+import { DataCommandExecutor, DATA_COMMAND, Command } from '../../services/command/DataCommand.js';
+import MyApi from '../../services/api/MyApi.js';
+import authService from '../../services/AuthService.js';
+
 
 const API_URL_BASE = 'http://localhost:3000';
 
@@ -7,6 +13,7 @@ class JobsSectionComponent extends BaseHTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.allJobs = [];
+        this.savedJobs = new Set();
     }
 
     connectedCallback() {
@@ -15,7 +22,7 @@ class JobsSectionComponent extends BaseHTMLElement {
 
     async init() {
         await this.loadHTML("/frontend/blocks/jobs/jobs.template");
-        
+
         const styleLink = document.createElement('link');
         styleLink.setAttribute('rel', 'stylesheet');
         styleLink.setAttribute('href', '/frontend/blocks/jobs/jobs.css');
@@ -25,11 +32,16 @@ class JobsSectionComponent extends BaseHTMLElement {
         if (pageTitleElement) {
             pageTitleElement.textContent = "Jobs";
         }
-        
+
+        if (authService.isLoggedIn()) {
+            const savedJobIds = await MyApi.getSavedItems();
+            this.savedJobs = new Set(savedJobIds);
+        }
+
         await this.fetchAndRenderJobs();
         this.searchBar();
     }
-    
+
     async fetchAndRenderJobs() {
         const jobsListingContainer = this.shadowRoot.querySelector('.jobs-section__listing');
         const jobsDetailContainer = this.shadowRoot.querySelector('.jobs-section__detail');
@@ -46,14 +58,20 @@ class JobsSectionComponent extends BaseHTMLElement {
             const jobs = await response.json();
 
             if (!response.ok || !Array.isArray(jobs)) {
+                jobsListingContainer.innerHTML = `<p class="text-center text-gray-500">Failed to load jobs.</p>`;
                 return;
             }
 
-            this.allJobs = jobs;
+            this.allJobs = jobs.map(job => {
+                job.isSaved = this.savedJobs.has(job.id);
+                return job;
+            });
+
             this.renderJobsList(this.allJobs);
-            
+
             if (this.allJobs.length > 0) {
                 this.renderJobDetail(this.allJobs[0]);
+                this.updateJobDetailButton(this.allJobs[0].id);
             } else {
                 jobsDetailContainer.innerHTML = `<p class="text-center text-gray-500">No jobs to display.</p>`;
             }
@@ -62,7 +80,7 @@ class JobsSectionComponent extends BaseHTMLElement {
             return;
         }
     }
-    
+
     searchBar() {
         const searchInput = this.shadowRoot.querySelector('.jobs-section__search-input');
         if (searchInput) {
@@ -112,6 +130,10 @@ class JobsSectionComponent extends BaseHTMLElement {
     createJobCard(job) {
         const div = document.createElement('div');
         div.className = 'job-card';
+        div.dataset.jobId = job.id;
+
+        const isSavedClass = this.savedJobs.has(job.id) ? "is-saved" : "";
+
         div.innerHTML = `
             <div class="job-card__header">
                 <img class="job-card__logo" src="${job.company_logo || 'https://placehold.co/48x48/1D1B20/F3F3F3?text=Logo'}" alt="Company Logo">
@@ -119,8 +141,8 @@ class JobsSectionComponent extends BaseHTMLElement {
                     <h3 class="job-card__title">${job.title || 'Job Title'}</h3>
                     <p class="job-card__subtitle">${job.company_name || 'Company Name'}</p>
                 </div>
-                <button class="job-card__action-icon job-card__action-icon--save">
-                    <img src="frontend/assets/icons/bookmark_filled.svg" alt="Save icon">
+                <button class="job-card__action-icon job-card__action-icon--save ${isSavedClass}">
+                    <img class="save-icon" src="frontend/assets/icons/bookmark_filled.svg" alt="Save icon">
                 </button>
                 <button class="job-card__action-icon job-card__action-icon--apply">
                     <img src="frontend/assets/icons/X.svg" alt="Apply icon">
@@ -131,6 +153,26 @@ class JobsSectionComponent extends BaseHTMLElement {
                 <p class="job-card__meta">${job.location || 'Remote'} - ${this.formatDate(job.posted_date)}</p>
             </div>
         `;
+
+        const saveButton = div.querySelector('.job-card__action-icon--save');
+        saveButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const isCurrentlySaved = this.savedJobs.has(job.id);
+            const action = isCurrentlySaved ? DATA_COMMAND.UNSAVE_ITEM : DATA_COMMAND.SAVE_ITEM;
+
+            if (isCurrentlySaved) {
+                this.savedJobs.delete(job.id);
+                saveButton.classList.remove('is-saved');
+            } else {
+                this.savedJobs.add(job.id);
+                saveButton.classList.add('is-saved');
+            }
+            const command = new Command(action, { itemId: job.id, data: job });
+            const executor = new DataCommandExecutor(MyApi);
+            executor.execute(command);
+            this.updateJobDetailButton(job.id);
+        });
+
         return div;
     }
 
@@ -139,6 +181,9 @@ class JobsSectionComponent extends BaseHTMLElement {
         if (!jobsDetailContainer || !job) {
             return;
         }
+
+        const isSavedClass = this.savedJobs.has(job.id) ? "is-saved" : "";
+        const saveButtonText = this.savedJobs.has(job.id) ? "Saved" : "Save";
 
         jobsDetailContainer.innerHTML = `
             <div class="job-detail__header">
@@ -155,11 +200,11 @@ class JobsSectionComponent extends BaseHTMLElement {
             </div>
 
             <div class="job-detail__actions">
-                <button class="job-detail__action-button job-detail__action-button--save">
+                <button class="job-detail__action-button job-detail__action-button--save ${isSavedClass}" data-job-id="${job.id}">
                     <span class="job-detail__action-icon">
-                        <img src="frontend/assets/icons/bookmark_filled.svg" alt="Save icon">
+                        <img class="save-icon" src="frontend/assets/icons/bookmark_filled.svg" alt="Save icon">
                     </span>
-                    Save
+                    ${saveButtonText}
                 </button>
                 <button class="job-detail__action-button job-detail__action-button--apply">
                     <span class="job-detail__action-icon">
@@ -199,7 +244,7 @@ class JobsSectionComponent extends BaseHTMLElement {
                     </div>
                     <div class="job-detail__glance-item">
                         <span class="job-detail__glance-icon">
-                            <img src="frontend/assets/icons/jobs.svg" alt="Job type icon"> 
+                            <img src="frontend/assets/icons/jobs.svg" alt="Job type icon">
                         </span>
                         <p class="job-detail__glance-text">
                             <span class="job-detail__glance-text--bold">${job.employment_type || 'Job'}</span><br/>
@@ -225,17 +270,6 @@ class JobsSectionComponent extends BaseHTMLElement {
             <hr class="job-detail__divider">
 
             <div class="job-detail__section">
-                <h3 class="job-detail__section-title">What this job offers</h3>
-                <ul class="job-detail__offer-list">
-                    ${(job.benefits_list || []).map(item => `
-                        <li class="job-detail__offer-item">${item}</li>
-                    `).join('')}
-                </ul>
-            </div>
-
-            <hr class="job-detail__divider">
-
-            <div class="job-detail__section">
                 <h3 class="job-detail__section-title">About the employer</h3>
                 <div class="job-detail__employer-header">
                     <img class="job-detail__employer-logo" src="${job.employer_logo || 'https://placehold.co/48x48/1D1B20/F3F3F3?text=Logo'}" alt="Employer Logo">
@@ -250,6 +284,64 @@ class JobsSectionComponent extends BaseHTMLElement {
                 <p class="job-detail__employer-text">${job.employer_description || 'No description available.'}</p>
             </div>
         `;
+
+        const saveButton = jobsDetailContainer.querySelector('.job-detail__action-button--save');
+        saveButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const isCurrentlySaved = this.savedJobs.has(job.id);
+            const action = isCurrentlySaved ? DATA_COMMAND.UNSAVE_ITEM : DATA_COMMAND.SAVE_ITEM;
+
+            if (isCurrentlySaved) {
+                this.savedJobs.delete(job.id);
+                saveButton.classList.remove('is-saved');
+            } else {
+                this.savedJobs.add(job.id);
+                saveButton.classList.add('is-saved');
+            }
+
+            saveButton.textContent = this.savedJobs.has(job.id) ? "Saved" : "Save";
+            const saveIcon = document.createElement('span');
+            saveIcon.className = "job-detail__action-icon";
+            const imgClass = this.savedJobs.has(job.id) ? "save-icon is-saved" : "save-icon";
+            saveIcon.innerHTML = `<img class="${imgClass}" src="frontend/assets/icons/bookmark_filled.svg" alt="Save icon">`;
+            saveButton.prepend(saveIcon);
+
+            const command = new Command(action, { itemId: job.id, data: job });
+            const executor = new DataCommandExecutor(MyApi);
+            executor.execute(command);
+            this.updateJobListButton(job.id);
+        });
+    }
+
+    updateJobListButton(jobId) {
+        const jobCard = this.shadowRoot.querySelector(`.job-card[data-job-id="${jobId}"]`);
+        if (jobCard) {
+            const saveButton = jobCard.querySelector('.job-card__action-icon--save');
+            if (this.savedJobs.has(jobId)) {
+                saveButton.classList.add('is-saved');
+            } else {
+                saveButton.classList.remove('is-saved');
+            }
+        }
+    }
+
+    updateJobDetailButton(jobId) {
+        const jobDetailContainer = this.shadowRoot.querySelector('.jobs-section__detail');
+        const saveButton = jobDetailContainer.querySelector('.job-detail__action-button--save');
+        if (saveButton && saveButton.dataset.jobId === jobId) {
+            if (this.savedJobs.has(jobId)) {
+                saveButton.classList.add('is-saved');
+                saveButton.textContent = "Saved";
+            } else {
+                saveButton.classList.remove('is-saved');
+                saveButton.textContent = "Save";
+            }
+            const saveIcon = document.createElement('span');
+            saveIcon.className = "job-detail__action-icon";
+            const imgClass = this.savedJobs.has(jobId) ? "save-icon is-saved" : "save-icon";
+            saveIcon.innerHTML = `<img class="${imgClass}" src="frontend/assets/icons/bookmark_filled.svg" alt="Save icon">`;
+            saveButton.prepend(saveIcon);
+        }
     }
 
     formatDate(dateString) {
