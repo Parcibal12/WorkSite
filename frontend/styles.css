@@ -2,6 +2,7 @@
     --color-fondo-primario: #000000;
     --color-texto-general: #f3f3f3;
     --color-borde-divisor: rgba(84, 84, 86, 0.34);
+    --color-texto-secundario: #8A8A8E;
 
     --fuente-principal: 'SF Pro', sans-serif;
     --fuente-secundaria: 'SF Pro Text', sans-serif;
@@ -78,7 +79,8 @@ input, button, select, textarea {
     height: var(--altura-header-contenido);
     background: var(--color-fondo-primario);
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 40px;
     align-items: center;
     position: fixed;
     top: 0;
@@ -96,9 +98,11 @@ input, button, select, textarea {
     white-space: nowrap;
 }
 
+
 .main-content__actions {
     display: flex;
     gap: 15px;
+    margin-left: auto;
 }
 
 .accion-button {
@@ -162,4 +166,34 @@ input, button, select, textarea {
     padding-top: 0;
     width: 100%;
     flex-grow: 1;
+}
+
+
+#jobs-context-nav {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+#jobs-context-nav a {
+    font-family: var(--fuente-secundaria);
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    
+    color: var(--color-texto-secundario);
+    background-color: transparent;
+    padding-bottom: 5px;
+    border-bottom: 2px solid transparent; 
+    
+    transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+#jobs-context-nav a:hover {
+    color: var(--color-texto-general);
+}
+
+#jobs-context-nav a.active {
+    color: var(--color-texto-general);
+    border-bottom-color: var(--color-texto-general);
 }

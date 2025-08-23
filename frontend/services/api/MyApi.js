@@ -57,6 +57,21 @@ class MyApi {
         return savedJobs.map(job => job.id);
     }
 
+
+    async getSavedJobsDetails() {
+        const token = authService.getToken();
+        const response = await fetch(`${this.baseUrl}/jobs/saved`, {
+            headers: { 
+                "Authorization": `Bearer ${token}`
+            }
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`Failed to get saved jobs details: ${errorData.message}`);
+        }
+        return await response.json();
+    }
+    
     async getItem(itemId) {
         const token = authService.getToken();
         const response = await fetch(`${this.baseUrl}/jobs/${itemId}`, {

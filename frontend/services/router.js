@@ -35,6 +35,8 @@ const Router = {
                 history.pushState({ route }, "", route);
             }
         }
+        const jobsContextHeader = document.getElementById('jobs-context-nav');
+        jobsContextHeader.style.display = 'none';
 
         const appContainer = document.getElementById('app-container');
         const isAuthRoute = route === "/login" || route === "/register";
@@ -73,6 +75,7 @@ const Router = {
             case "/jobs":
                 pageComponent = document.createElement("jobs-section");
                 pageTitle = "Jobs";
+                jobsContextHeader.style.display = 'flex';
                 break;
             case "/inbox":
                 pageComponent = document.createElement("inbox-section");
