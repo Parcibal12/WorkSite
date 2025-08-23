@@ -1,10 +1,10 @@
 import express from 'express';
 import { createInstitution, getInstitutions } from '../controllers/institutionController.js';
-import { protect } from '../middleware/authMiddleware.js';
+import authMiddleware from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.post('/', protect, createInstitution);
+router.post('/', authMiddleware, createInstitution);
 
 
 router.get('/', getInstitutions);

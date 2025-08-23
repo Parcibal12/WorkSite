@@ -8,6 +8,10 @@ import { Event } from './src/models/eventModel.js';
 import { Institution } from './src/models/institutionModel.js';
 import { EventRegistration } from './src/models/eventRegistrationModel.js';
 import { Job } from './src/models/jobModel.js';
+import { SavedJob } from './src/models/savedJobModel.js'; 
+
+import authMiddleware from './src/middleware/authMiddleware.js';
+
 
 Event.belongsTo(User, { foreignKey: 'organizer_id', as: 'organizer' });
 User.hasMany(Event, { foreignKey: 'organizer_id', as: 'organizedEvents' });
@@ -24,6 +28,17 @@ User.belongsToMany(Event, {
     through: EventRegistration,
     foreignKey: 'user_id',
     as: 'registeredEvents'
+});
+
+User.belongsToMany(Job, {
+    through: SavedJob,
+    foreignKey: 'userId',
+    as: 'savedJobs' 
+});
+Job.belongsToMany(User, {
+    through: SavedJob,
+    foreignKey: 'jobId',
+    as: 'savingUsers' 
 });
 
 import authRoutes from './src/routes/authRoutes.js';

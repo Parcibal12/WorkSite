@@ -1,6 +1,6 @@
 import express from 'express';
 import eventController from '../controllers/eventController.js';
-import { protect } from '../middleware/authMiddleware.js'; 
+import authMiddleware from '../middleware/authMiddleware.js'; 
 
 const router = express.Router();
 
@@ -9,9 +9,9 @@ router.get('/', eventController.getAllEvents);
 
 router.get('/:id', eventController.getEventById);
 
-router.post('/', protect, eventController.createEvent);
+router.post('/', authMiddleware, eventController.createEvent);
 
-router.put('/:id/register', protect, eventController.registerForEvent);
+router.put('/:id/register', authMiddleware, eventController.registerForEvent);
 
 
 export default router;
