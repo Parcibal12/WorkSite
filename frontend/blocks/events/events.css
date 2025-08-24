@@ -264,3 +264,27 @@
     margin-bottom: 0;
 }
 
+
+.event-card__bookmark.is-saved .event-card__bookmark-icon {
+    filter: invert(1); 
+}
+
+
+
+.status-filters__item.active {
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+}
+
+.status-filters__item.active .status-filters__text {
+    color: #000000;
+}
+
+.status-filters__item.active .status-filters__icon {
+    filter: invert(1);
+}
+
+.status-filters__item.active .status-filters__count {
+    background-color: #000000;
+    color: #FFFFFF;
+}

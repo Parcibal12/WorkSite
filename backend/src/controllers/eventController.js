@@ -1,8 +1,8 @@
-import { Op } from 'sequelize';
 import { Event } from '../models/eventModel.js';
 import { Institution } from '../models/institutionModel.js';
 import { User } from '../models/userModel.js';
 import { EventRegistration } from '../models/eventRegistrationModel.js';
+import { SavedEvent } from '../models/savedEventModel.js';
 
 const eventController = {
     getAllEvents: async (req, res) => {
@@ -96,7 +96,7 @@ const eventController = {
     },
 
     createEvent: async (req, res) => {
-        const organizer_id = req.user.id;
+        const organizer_id = req.userId;
         let { title, description, location, date, institution_id } = req.body;
 
         if (!title || !description || !location || !date) {
@@ -138,7 +138,7 @@ const eventController = {
     
     updateEvent: async (req, res) => {
         const { id } = req.params;
-        const organizer_id = req.user.id;
+        const organizer_id = req.userId;
         const eventData = req.body;
 
         try {
@@ -171,7 +171,7 @@ const eventController = {
 
     deleteEvent: async (req, res) => {
         const { id } = req.params;
-        const organizer_id = req.user.id;
+        const organizer_id = req.userId;
 
         try {
             const event = await Event.findByPk(id);
@@ -196,7 +196,7 @@ const eventController = {
 
     registerForEvent: async (req, res) => {
         const { id: event_id } = req.params;
-        const user_id = req.user.id;
+        const user_id = req.userId;
 
         try {
             const event = await Event.findByPk(event_id);
@@ -219,6 +219,50 @@ const eventController = {
             res.status(500).json({
                 error: error.message
             });
+        }
+    },
+
+    saveEvent: async (req, res) => {
+        try {
+            const userId = req.userId;
+            const { eventId } = req.body;
+            await SavedEvent.findOrCreate({
+                where: { userId, eventId }
+            });
+            res.status(201).json({ message: 'Event saved successfully' });
+        } catch (error) {
+            res.status(500).json({
+                error: error.message
+            });
+        }
+    },
+
+    unsaveEvent: async (req, res) => {
+        try {
+            const userId = req.userId;
+            const { eventId } = req.body;
+            await SavedEvent.destroy({
+                where: { userId, eventId }
+            });
+            res.status(200).json({ message: 'Event unsaved successfully' });
+        } catch (error) {
+            res.status(500).json({ error: 'Failed to unsave event' });
+        }
+    },
+
+    getSavedEvents: async (req, res) => {
+        try {
+            const userId = req.userId;
+            const userWithSavedEvents = await User.findByPk(userId, {
+                include: [{
+                    model: Event,
+                    as: 'savedEvents',
+                    through: { attributes: [] }
+                }]
+            });
+            res.status(200).json(userWithSavedEvents ? userWithSavedEvents.savedEvents : []);
+        } catch (error) {
+            res.status(500).json({ error: 'Failed to retrieve saved events' });
         }
     }
 };

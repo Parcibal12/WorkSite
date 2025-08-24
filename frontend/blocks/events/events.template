@@ -10,11 +10,12 @@
         </div>
 
         <div class="status-filters">
-          <div class="status-filters__item">
+          <div id="saved-filter-button" class="status-filters__item">
             <img src="/frontend/assets/icons/bookmark_filled.svg" alt="Saved icon" class="status-filters__icon">
             <span class="status-filters__text">Saved</span>
-            <span class="status-filters__count">0</span>
+            <span id="saved-events-counter" class="status-filters__count">0</span>
           </div>
+          
           <div class="status-filters__item">
             <img src="/frontend/assets/icons/check_circle.svg" alt="Registered icon" class="status-filters__icon">
             <span class="status-filters__text">Registered</span>

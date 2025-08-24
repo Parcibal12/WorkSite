@@ -6,12 +6,13 @@ const router = express.Router();
 
 
 router.get('/', eventController.getAllEvents);
-
+router.get('/saved', authMiddleware, eventController.getSavedEvents);
 router.get('/:id', eventController.getEventById);
 
 router.post('/', authMiddleware, eventController.createEvent);
+router.post('/save', authMiddleware, eventController.saveEvent);
+router.post('/unsave', authMiddleware, eventController.unsaveEvent);
 
 router.put('/:id/register', authMiddleware, eventController.registerForEvent);
-
 
 export default router;

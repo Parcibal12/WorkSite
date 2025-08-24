@@ -1,22 +1,22 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.js';
 import { User } from './userModel.js';
-import { Job } from './jobModel.js';
+import { Event } from './eventModel.js';
 
-const SavedJob = sequelize.define('SavedJob', {
+const SavedEvent = sequelize.define('SavedEvent', {
     userId: {
         type: DataTypes.UUID,
         references: { model: User, key: 'id' },
         primaryKey: true
     },
-    jobId: {
+    eventId: {
         type: DataTypes.UUID,
-        references: { model: Job, key: 'id' },
+        references: { model: Event, key: 'id' },
         primaryKey: true
-    }
+    }   
 }, {
-    tableName: 'saved_jobs',
+    tableName: 'saved_events',
     timestamps: false
 });
 
-export { SavedJob };
+export { SavedEvent };

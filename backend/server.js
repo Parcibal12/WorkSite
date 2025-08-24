@@ -9,6 +9,7 @@ import { Institution } from './src/models/institutionModel.js';
 import { EventRegistration } from './src/models/eventRegistrationModel.js';
 import { Job } from './src/models/jobModel.js';
 import { SavedJob } from './src/models/savedJobModel.js'; 
+import { SavedEvent } from './src/models/savedEventModel.js';
 
 import authMiddleware from './src/middleware/authMiddleware.js';
 
@@ -19,26 +20,21 @@ User.hasMany(Event, { foreignKey: 'organizer_id', as: 'organizedEvents' });
 Event.belongsTo(Institution, { foreignKey: 'institution_id', as: 'institution' });
 Institution.hasMany(Event, { foreignKey: 'institution_id', as: 'events' });
 
-Event.belongsToMany(User, {
-    through: EventRegistration,
-    foreignKey: 'event_id',
-    as: 'registeredUsers'
-});
-User.belongsToMany(Event, {
-    through: EventRegistration,
-    foreignKey: 'user_id',
-    as: 'registeredEvents'
-});
+Event.belongsToMany(User, { through: EventRegistration, foreignKey: 'event_id', as: 'registeredUsers' });
+User.belongsToMany(Event, { through: EventRegistration, foreignKey: 'user_id', as: 'registeredEvents' });
 
-User.belongsToMany(Job, {
-    through: SavedJob,
+User.belongsToMany(Job, { through: SavedJob, foreignKey: 'userId', as: 'savedJobs' });
+Job.belongsToMany(User, { through: SavedJob, foreignKey: 'jobId', as: 'savingUsers' });
+
+User.belongsToMany(Event, {
+    through: SavedEvent,
     foreignKey: 'userId',
-    as: 'savedJobs' 
+    as: 'savedEvents'
 });
-Job.belongsToMany(User, {
-    through: SavedJob,
-    foreignKey: 'jobId',
-    as: 'savingUsers' 
+Event.belongsToMany(User, {
+    through: SavedEvent,
+    foreignKey: 'eventId',
+    as: 'eventSavingUsers'
 });
 
 import authRoutes from './src/routes/authRoutes.js';
