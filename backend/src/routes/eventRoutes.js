@@ -13,6 +13,7 @@ router.post('/', authMiddleware, eventController.createEvent);
 router.post('/save', authMiddleware, eventController.saveEvent);
 router.post('/unsave', authMiddleware, eventController.unsaveEvent);
 
+
 router.put('/:id/register', authMiddleware, eventController.registerForEvent);
 
 export default router;

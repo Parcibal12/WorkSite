@@ -3,6 +3,7 @@ import { Institution } from '../models/institutionModel.js';
 import { User } from '../models/userModel.js';
 import { EventRegistration } from '../models/eventRegistrationModel.js';
 import { SavedEvent } from '../models/savedEventModel.js';
+import { LikedEvent } from '../models/likedEventModel.js';
 
 const eventController = {
     getAllEvents: async (req, res) => {
@@ -264,7 +265,11 @@ const eventController = {
         } catch (error) {
             res.status(500).json({ error: 'Failed to retrieve saved events' });
         }
-    }
+    },
+
+
+
+
 };
 
 export default eventController;
