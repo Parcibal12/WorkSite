@@ -11,8 +11,34 @@ const Institution = sequelize.define('Institution', {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
+    },
+    description: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
+    logo_url: {
+        type: DataTypes.STRING,
+        allowNull: true,
         validate: {
-            notEmpty: true,
+            isUrl: true,
+        },
+    },
+    address: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    contact_email: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+            isEmail: true,
+        },
+    },
+    website: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+            isUrl: true,
         },
     },
 }, {

@@ -94,9 +94,10 @@ class EmployersSectionComponent extends BaseHTMLElement {
         listItem.className = 'employers-template__list-item';
         
         listItem.innerHTML = `
+            <img class="employers-template__logo" src="${employer.logo_url || 'https://placehold.co/48x48/1D1D1D/FFFFFF?text=Logo'}" alt="${employer.name} Logo">
             <div class="employers-template__content">
                 <h4 class="employers-template__company-name">${employer.name}</h4>
-                <p class="employers-template__job-description">${employer.description}</p>
+                <p class="employers-template__job-description">${employer.description || 'No description available.'}</p>
             </div>
             <button class="employers-template__follow-button">
                 Follow

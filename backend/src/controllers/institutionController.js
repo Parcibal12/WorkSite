@@ -2,7 +2,7 @@ import { Institution } from '../models/institutionModel.js';
 
 export const createInstitution = async (req, res) => {
     try {
-        const { name, description, address, contact_email, website } = req.body;
+        const { name, description, logo_url, address, contact_email, website } = req.body;
 
         if (!name || !description) {
             return res.status(400).json({ message: "The 'name' and 'description' fields are required" });
@@ -11,6 +11,7 @@ export const createInstitution = async (req, res) => {
         const newInstitution = await Institution.create({
             name,
             description,
+            logo_url,
             address,
             contact_email,
             website

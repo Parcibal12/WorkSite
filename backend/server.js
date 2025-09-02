@@ -10,7 +10,6 @@ import { EventRegistration } from './src/models/eventRegistrationModel.js';
 import { Job } from './src/models/jobModel.js';
 import { SavedJob } from './src/models/savedJobModel.js'; 
 import { SavedEvent } from './src/models/savedEventModel.js';
-import { LikedEvent } from './src/models/likedEventModel.js';
 
 import authMiddleware from './src/middleware/authMiddleware.js';
 
