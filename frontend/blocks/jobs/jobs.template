@@ -1,27 +1,23 @@
-<section class="jobs-section">
-    <div class="jobs-section__filters">
-        <div class="jobs-section__filter-group jobs-section__filter-group--search">
-            <input type="text" class="jobs-section__search-input" placeholder="Search jobs">
-            <span class="jobs-section__search-icon">
-                <img src="frontend/assets/icons/search.svg" alt="Search icon">
-            </span>
+<section class="jobs-page">
+    <div class="jobs-filters">
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Search jobs">
+            <img src="frontend/assets/icons/search.svg" alt="Search icon" class="search-icon">
         </div>
-        
-        <button class="jobs-section__filter-button">
+        <button class="filter-button">
             Locations
-            <span class="jobs-section__filter-icon">
-                <img src="frontend/assets/icons/keyboard_arrow_down.svg" alt="Dropdown arrow icon">
-            </span>
+            <img src="frontend/assets/icons/keyboard_arrow_down.svg" alt="Dropdown icon">
         </button>
-        
-        <button class="jobs-section__filter-button">Full-time job</button>
-        <button class="jobs-section__filter-button">Internship</button>
-        <button class="jobs-section__filter-button">Part time</button>
+        <button class="filter-button">Full-time job</button>
+        <button class="filter-button">Internship</button>
+        <button class="filter-button">Part time</button>
     </div>
 
-    <div class="jobs-section__content">
-        <!-- El contenido se cargará aquí dinámicamente -->
-        <div class="jobs-section__listing"></div>
-        <div class="jobs-section__detail"></div>
+    <div class="jobs-content">
+        <div class="jobs-list-panel">
+        </div>
+        <div class="jobs-detail-panel">
+        </div>
     </div>
 </section>
+
