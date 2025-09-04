@@ -12,7 +12,7 @@ const eventController = {
                     {
                         model: Institution,
                         as: 'institution', 
-                        attributes: ['name'],
+                        attributes: ['name', 'logo_url'],
                     },
                     {
                         model: User,
@@ -36,6 +36,7 @@ const eventController = {
                 date: event.date,
                 organizer: event.organizer, 
                 institution_name: event.institution ? event.institution.name : null,
+                institution_logo: event.institution ? event.institution.logo_url : null,
                 registered_count: event.registeredUsers.length,
             }));
 
@@ -56,7 +57,7 @@ const eventController = {
                     {
                         model: Institution,
                         as: 'institution',
-                        attributes: ['name'],
+                        attributes: ['name', 'logo_url'],
                     },
                     {
                         model: User,
@@ -84,6 +85,7 @@ const eventController = {
                 date: event.date,
                 organizer: event.organizer, 
                 institution_name: event.institution ? event.institution.name : null,
+                institution_logo: event.institution ? event.institution.logo_url : null,
                 registered_count: event.registeredUsers.length,
             };
 
@@ -250,18 +252,49 @@ const eventController = {
         }
     },
 
+
     getSavedEvents: async (req, res) => {
         try {
             const userId = req.userId;
-            const userWithSavedEvents = await User.findByPk(userId, {
+            const user = await User.findByPk(userId, {
                 include: [{
                     model: Event,
                     as: 'savedEvents',
-                    through: { attributes: [] }
+                    through: { attributes: [] },
+                    include: [
+                        {
+                            model: Institution,
+                            as: 'institution',
+                            attributes: ['name', 'logo_url']
+                        },
+                        {
+                            model: User,
+                            as: 'registeredUsers',
+                            attributes: ['id'],
+                            through: { attributes: [] }
+                        }
+                    ]
                 }]
             });
-            res.status(200).json(userWithSavedEvents ? userWithSavedEvents.savedEvents : []);
+
+            if (!user) {
+                return res.status(200).json([]);
+            }
+
+            const formattedEvents = user.savedEvents.map(event => ({
+                id: event.id,
+                title: event.title,
+                description: event.description,
+                location: event.location,
+                date: event.date,
+                institution_name: event.institution ? event.institution.name : 'Organizer',
+                institution_logo: event.institution ? event.institution.logo_url : null,
+                registered_count: event.registeredUsers ? event.registeredUsers.length : 0,
+            }));
+
+            res.status(200).json(formattedEvents);
         } catch (error) {
+            console.error('Error in getSavedEvents:', error);
             res.status(500).json({ error: 'Failed to retrieve saved events' });
         }
     },

@@ -145,7 +145,7 @@ class EventsSectionComponent extends BaseHTMLElement {
 
         article.innerHTML = `
             <div class="event-card__header">
-                <div class="event-card__logo-placeholder"></div>
+                <img class="event-card__logo" src="${event.institution_logo || 'https://placehold.co/40x40/000000/FFFFFF?text=L'}" alt="${event.institution_name || 'Logo'}">
                 <h3 class="event-card__company">${event.institution_name || 'Organizer'}</h3>
                 <button class="event-card__bookmark ${isSavedClass}" data-event-id="${event.id}">
                     <img src="/frontend/assets/icons/bookmark_filled.svg" alt="Bookmark icon" class="event-card__bookmark-icon">
