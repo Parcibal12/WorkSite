@@ -72,11 +72,18 @@
     border-right: 1px solid #383838;
 }
 
+
 .jobs-detail-panel {
     flex-grow: 1;
     overflow-y: auto;
-    padding: 30px 40px;
+    padding: 0; 
     background-color: #090909;
+}
+
+.job-detail__content-wrapper {
+    max-width: 740px; 
+    margin: 30px auto;
+    padding: 0 20px;
 }
 
 .job-card {

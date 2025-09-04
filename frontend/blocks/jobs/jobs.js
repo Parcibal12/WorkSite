@@ -17,11 +17,18 @@ class JobsSectionComponent extends BaseHTMLElement {
         this.handleSearchTabClick = this.handleSearchTabClick.bind(this);
         this.handleSavedTabClick = this.handleSavedTabClick.bind(this);
     }
-        connectedCallback() {
+
+
+
+    connectedCallback() {
         this.mainContentContainer = document.getElementById('main-content-container');
         if (this.mainContentContainer) {
             this.originalOverflowY = this.mainContentContainer.style.overflowY;
+            this.originalPadding = this.mainContentContainer.style.padding;
+
             this.mainContentContainer.style.overflowY = 'hidden';
+            this.mainContentContainer.style.padding = '0';
+            this.mainContentContainer.scrollTop = 0;
         }
 
         this.init();
@@ -31,6 +38,7 @@ class JobsSectionComponent extends BaseHTMLElement {
     disconnectedCallback() {
         if (this.mainContentContainer) {
             this.mainContentContainer.style.overflowY = this.originalOverflowY;
+            this.mainContentContainer.style.padding = this.originalPadding;
         }
 
         document.getElementById('jobs-search-tab')?.removeEventListener('click', this.handleSearchTabClick);
@@ -230,7 +238,7 @@ class JobsSectionComponent extends BaseHTMLElement {
         const isSavedClass = isSaved ? "is-saved" : "";
         
         let benefitsHtml = '';
-        if (job.benefits_list && job.benefits_list.length > 0) {
+        if (job.benefits_list && Array.isArray(job.benefits_list) && job.benefits_list.length > 0) {
             const benefitsItems = job.benefits_list.map(benefit => `<li class="job-detail__offer-item">${benefit}</li>`).join('');
             benefitsHtml = `
                 <hr class="job-detail__divider">
@@ -244,89 +252,88 @@ class JobsSectionComponent extends BaseHTMLElement {
         }
 
         detailPanel.innerHTML = `
-            <div class="job-detail__header">
-                <img class="job-detail__logo" src="${job.company_logo || 'https://placehold.co/48x48/1D1B20/F3F3F3?text=Logo'}" alt="Company Logo">
-                <div class="job-detail__title-group">
-                    <h3 class="job-detail__company-name">${job.company_name || 'Company Name'}</h3>
-                    <p class="job-detail__company-location">${job.location || 'Remote'}</p>
-                </div>
-            </div>
-            <div class="job-detail__title-info">
-                <h2 class="job-detail__title">${job.title || 'Job Title'}</h2>
-                <p class="job-detail__posted-info">Posted ${this.formatDate(job.posted_date)} - Apply by ${this.formatDate(job.application_deadline)}</p>
-            </div>
-            <div class="job-detail__actions">
-                <button class="job-detail__action-button job-detail__action-button--save ${isSavedClass}" data-job-id="${job.id}">
-                    <span class="job-detail__action-icon">
-                        <img class="save-icon" src="frontend/assets/icons/bookmark_filled.svg" alt="Save icon">
-                    </span>
-                    ${saveButtonText}
-                </button>
-                <button class="job-detail__action-button job-detail__action-button--apply">
-                    <span class="job-detail__action-icon">
-                        <img src="frontend/assets/icons/external_link.svg" alt="Apply icon">
-                    </span>
-                    Apply externally
-                </button>
-                <button class="job-detail__action-button job-detail__action-button--share">
-                    <span class="job-detail__action-icon">
-                        <img src="frontend/assets/icons/more_horiz.svg" alt="Share icon">
-                    </span>
-                </button>
-            </div>
-            <hr class="job-detail__divider">
-            <div class="job-detail__section">
-                <h3 class="job-detail__section-title">At a glance</h3>
-                <div class="job-detail__glance-items">
-                    <div class="job-detail__glance-item">
-                        <span class="job-detail__glance-icon"><img src="frontend/assets/icons/credit_card.svg" alt="Salary icon"></span>
-                        <p class="job-detail__glance-text">
-                            <span class="job-detail__glance-text--bold">${job.salary || 'Salary not specified'}</span><br/>
-                            ${job.benefits_list && job.benefits_list.length > 0 ? job.benefits_list.slice(0, 2).join(', ') + '...' : 'No benefits listed'}
-                        </p>
-                    </div>
-                    <div class="job-detail__glance-item">
-                        <span class="job-detail__glance-icon"><img src="frontend/assets/icons/location_on.svg" alt="Location icon"></span>
-                        <p class="job-detail__glance-text">
-                            <span class="job-detail__glance-text--bold">${job.location || 'Remote'}</span><br/>
-                            ${job.workplace_type || ''}
-                        </p>
-                    </div>
-                    <div class="job-detail__glance-item">
-                        <span class="job-detail__glance-icon"><img src="frontend/assets/icons/jobs.svg" alt="Job type icon"></span>
-                        <p class="job-detail__glance-text">
-                            <span class="job-detail__glance-text--bold">${job.employment_type || 'Job'}</span><br/>
-                            ${job.contractType || ''}
-                        </p>
+            <div class="job-detail__content-wrapper"> 
+                <div class="job-detail__header">
+                    <img class="job-detail__logo" src="${job.company_logo || 'https://placehold.co/48x48/1D1B20/F3F3F3?text=Logo'}" alt="Company Logo">
+                    <div class="job-detail__title-group">
+                        <h3 class="job-detail__company-name">${job.company_name || 'Company Name'}</h3>
+                        <p class="job-detail__company-location">${job.location || 'Remote'}</p>
                     </div>
                 </div>
-            </div>
-            <hr class="job-detail__divider">
-            <div class="job-detail__section">
-                <h3 class="job-detail__section-title">About</h3>
-                <p class="job-detail__about-text">${job.description || 'No description available.'}</p>
-                <button class="job-detail__read-more">
-                    More
-                    <span class="job-detail__read-more-icon"><img src="frontend/assets/icons/keyboard_arrow_down.svg" alt="Read more arrow icon"></span>
-                </button>
-            </div>
-            
-            ${benefitsHtml}
-
-            <hr class="job-detail__divider">
-            <div class="job-detail__section">
-                <h3 class="job-detail__section-title">About the employer</h3>
-                <div class="job-detail__employer-header">
-                    <img class="job-detail__employer-logo" src="${job.employer_logo || 'https://placehold.co/48x48/1D1B20/F3F3F3?text=Logo'}" alt="Employer Logo">
-                    <div class="job-detail__employer-info">
-                        <h4 class="job-detail__employer-name">${job.company_name || 'Company Name'}</h4>
-                        <p class="job-detail__employer-location">${job.employer_location || 'Location'}</p>
-                    </div>
-                    <button class="job-detail__action-button job-detail__action-button--follow">Follow</button>
+                <div class="job-detail__title-info">
+                    <h2 class="job-detail__title">${job.title || 'Job Title'}</h2>
+                    <p class="job-detail__posted-info">Posted ${this.formatDate(job.posted_date)} - Apply by ${this.formatDate(job.application_deadline)}</p>
                 </div>
-                <p class="job-detail__employer-text">${job.employer_description || 'No description available.'}</p>
-            </div>
-        `;
+                <div class="job-detail__actions">
+                    <button class="job-detail__action-button job-detail__action-button--save ${isSavedClass}" data-job-id="${job.id}">
+                        <span class="job-detail__action-icon">
+                            <img class="save-icon" src="frontend/assets/icons/bookmark_filled.svg" alt="Save icon">
+                        </span>
+                        ${saveButtonText}
+                    </button>
+                    <button class="job-detail__action-button job-detail__action-button--apply">
+                        <span class="job-detail__action-icon">
+                            <img src="frontend/assets/icons/external_link.svg" alt="Apply icon">
+                        </span>
+                        Apply externally
+                    </button>
+                    <button class="job-detail__action-button job-detail__action-button--share">
+                        <span class="job-detail__action-icon">
+                            <img src="frontend/assets/icons/more_horiz.svg" alt="Share icon">
+                        </span>
+                    </button>
+                </div>
+                <hr class="job-detail__divider">
+                <div class="job-detail__section">
+                    <h3 class="job-detail__section-title">At a glance</h3>
+                    <div class="job-detail__glance-items">
+                        <div class="job-detail__glance-item">
+                            <span class="job-detail__glance-icon"><img src="frontend/assets/icons/credit_card.svg" alt="Salary icon"></span>
+                            <p class="job-detail__glance-text">
+                                <span class="job-detail__glance-text--bold">${job.salary || 'Salary not specified'}</span><br/>
+                                ${job.benefits_list && job.benefits_list.length > 0 ? job.benefits_list.slice(0, 2).join(', ') + '...' : 'No benefits listed'}
+                            </p>
+                        </div>
+                        <div class="job-detail__glance-item">
+                            <span class="job-detail__glance-icon"><img src="frontend/assets/icons/location_on.svg" alt="Location icon"></span>
+                            <p class="job-detail__glance-text">
+                                <span class="job-detail__glance-text--bold">${job.location || 'Remote'}</span><br/>
+                                ${job.workplace_type || ''}
+                            </p>
+                        </div>
+                        <div class="job-detail__glance-item">
+                            <span class="job-detail__glance-icon"><img src="frontend/assets/icons/jobs.svg" alt="Job type icon"></span>
+                            <p class="job-detail__glance-text">
+                                <span class="job-detail__glance-text--bold">${job.employment_type || 'Job'}</span><br/>
+                                ${job.contractType || ''}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <hr class="job-detail__divider">
+                <div class="job-detail__section">
+                    <h3 class="job-detail__section-title">About</h3>
+                    <p class="job-detail__about-text">${job.description || 'No description available.'}</p>
+                    <button class="job-detail__read-more">
+                        More
+                        <span class="job-detail__read-more-icon"><img src="frontend/assets/icons/keyboard_arrow_down.svg" alt="Read more arrow icon"></span>
+                    </button>
+                </div>
+                ${benefitsHtml}
+                <hr class="job-detail__divider">
+                <div class="job-detail__section">
+                    <h3 class="job-detail__section-title">About the employer</h3>
+                    <div class="job-detail__employer-header">
+                        <img class="job-detail__employer-logo" src="${job.employer_logo || 'https://placehold.co/48x48/1D1B20/F3F3F3?text=Logo'}" alt="Employer Logo">
+                        <div class="job-detail__employer-info">
+                            <h4 class="job-detail__employer-name">${job.company_name || 'Company Name'}</h4>
+                            <p class="job-detail__employer-location">${job.employer_location || 'Location'}</p>
+                        </div>
+                        <button class="job-detail__action-button job-detail__action-button--follow">Follow</button>
+                    </div>
+                    <p class="job-detail__employer-text">${job.employer_description || 'No description available.'}</p>
+                </div>
+            </div>`;
 
         const saveButton = detailPanel.querySelector('.job-detail__action-button--save');
         saveButton.addEventListener('click', (event) => {
@@ -334,6 +341,8 @@ class JobsSectionComponent extends BaseHTMLElement {
             this.toggleSaveState(job.id);
         });
     }
+
+
 
     toggleSaveState(jobId) {
         const isCurrentlySaved = this.savedJobs.has(jobId);
