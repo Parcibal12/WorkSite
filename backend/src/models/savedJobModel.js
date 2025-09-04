@@ -10,7 +10,7 @@ const SavedJob = sequelize.define('SavedJob', {
         primaryKey: true
     },
     jobId: {
-        type: DataTypes.UUID,
+        type: DataTypes.INTEGER,
         references: { model: Job, key: 'id' },
         primaryKey: true
     }

@@ -7,21 +7,13 @@ const Job = sequelize.define('Job', {
         primaryKey: true,
         autoIncrement: true
     },
+    institution_id: {
+        type: DataTypes.UUID,
+        allowNull: false,
+    },
     title: {
         type: DataTypes.STRING,
         allowNull: false
-    },
-    company: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    company_name: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
-    company_logo: {
-        type: DataTypes.STRING,
-        allowNull: true
     },
     description: {
         type: DataTypes.TEXT,
@@ -58,21 +50,10 @@ const Job = sequelize.define('Job', {
     employment_type: {
         type: DataTypes.STRING,
         allowNull: true
-    },
-    employer_logo: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
-    employer_location: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
-    employer_description: {
-        type: DataTypes.TEXT,
-        allowNull: true
     }
 }, {
-    tableName: 'jobs'
+    tableName: 'jobs',
+    timestamps: true 
 });
 
 export { Job };

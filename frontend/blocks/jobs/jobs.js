@@ -109,7 +109,7 @@ class JobsSectionComponent extends BaseHTMLElement {
         detailPanel.innerHTML = `<p>Select a job to view details.</p>`;
 
         try {
-            const response = await fetch(`${API_URL_BASE}/api/jobs`);
+            const response = await fetch(`${API_URL_BASE}/api/jobs`, { cache: 'no-cache' }); 
             const jobs = await response.json();
             if (!response.ok) throw new Error('Failed to load jobs');
 
@@ -122,6 +122,7 @@ class JobsSectionComponent extends BaseHTMLElement {
                 detailPanel.innerHTML = `<p>No jobs to display</p>`;
             }
         } catch (error) {
+            console.error("Fetch error:", error);
             listPanel.innerHTML = `<p>Failed to load jobs.</p>`;
         }
     }
@@ -291,7 +292,7 @@ class JobsSectionComponent extends BaseHTMLElement {
                             <span class="job-detail__glance-icon"><img src="frontend/assets/icons/credit_card.svg" alt="Salary icon"></span>
                             <p class="job-detail__glance-text">
                                 <span class="job-detail__glance-text--bold">${job.salary || 'Salary not specified'}</span><br/>
-                                ${job.benefits_list && job.benefits_list.length > 0 ? job.benefits_list.slice(0, 2).join(', ') + '...' : 'No benefits listed'}
+                                ${Array.isArray(job.benefits_list) && job.benefits_list.length > 0 ? job.benefits_list.slice(0, 2).join(', ') + '...' : 'No benefits listed'}
                             </p>
                         </div>
                         <div class="job-detail__glance-item">
