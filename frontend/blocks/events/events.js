@@ -139,6 +139,7 @@ class EventsSectionComponent extends BaseHTMLElement {
     createEventCard(event) {
         const article = document.createElement('article');
         article.className = 'event-card';
+        article.dataset.eventId = event.id;
         
         const isSaved = this.savedEvents.has(event.id);
         const isSavedClass = isSaved ? 'is-saved' : '';
@@ -183,6 +184,16 @@ class EventsSectionComponent extends BaseHTMLElement {
             const command = new Command(action, { itemId: eventId });
             const executor = new DataCommandExecutor(MyApi);
             executor.execute(command);
+        });
+
+        article.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const eventId = e.currentTarget.dataset.eventId;
+            document.body.dispatchEvent(new CustomEvent('navigate', {
+                bubbles: true,
+                composed: true,
+                detail: { page: `events/${eventId}` }
+            }));
         });
 
         return article;

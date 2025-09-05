@@ -143,6 +143,33 @@ class MyApi {
 
 
 
+
+
+    async getEventById(eventId) {
+        const response = await fetch(`${this.baseUrl}/events/${eventId}`);
+        if (!response.ok) {
+            throw new Error(`Failed to get event: ${response.statusText}`);
+        }
+        return await response.json();
+    }
+
+
+    async registerForEvent(eventId) {
+        const token = authService.getToken();
+        const response = await fetch(`${this.baseUrl}/events/${eventId}/register`, {
+            method: "PUT",
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}` 
+            }
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Failed to register for the event');
+        }
+    }
 }
+
+
 
 export default new MyApi(API_URL);

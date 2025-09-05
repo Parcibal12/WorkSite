@@ -7,6 +7,7 @@ import '/frontend/blocks/login/login.js';
 import '/frontend/blocks/jobs/jobs.js';
 import '/frontend/blocks/inbox/inbox.js';
 import '/frontend/blocks/employers/employers.js';
+import '/frontend/blocks/event-details/event-details.js';
 
 const Router = {
     init: () => {
@@ -50,46 +51,60 @@ const Router = {
         let pageComponent = null;
         let pageTitle = '';
 
-        switch (route) {
-            case "/explore":
-                pageComponent = document.createElement("explore-section");
-                pageTitle = "Explore";
-                break;
 
-            case "/feed":
-                pageComponent = document.createElement("feed-section");
-                pageTitle = "Feed";
-                break;
-            case "/events":
-                pageComponent = document.createElement("events-section");
-                pageTitle = "Events";
-                break;
-            case "/register":
-                pageComponent = document.createElement("register-section");
-                pageTitle = "Register";
-                break;
-            case "/login":
-                pageComponent = document.createElement("login-section");
-                pageTitle = "Login";
-                break;
-            case "/jobs":
-                pageComponent = document.createElement("jobs-section");
-                pageTitle = "Jobs";
-                jobsContextHeader.style.display = 'flex';
-                break;
-            case "/inbox":
-                pageComponent = document.createElement("inbox-section");
-                pageTitle = "Inbox";
-                break;
-            case "/employers":
-                pageComponent = document.createElement("employers-section");
-                pageTitle = "Employers";
-                break;
+        
+        const eventDetailRoute = /^\/events\/([a-fA-F0-9-]+)$/;
+        const match = route.match(eventDetailRoute);
 
-            default:
-                pageComponent = document.createElement("div");
-                pageTitle = "No Encontrado";
-                break;
+        if (match) {
+            const eventId = match[1];
+            pageComponent = document.createElement("event-details-section");
+            pageComponent.setAttribute('event-id', eventId);
+            pageTitle = "";
+        } else {
+
+
+            switch (route) {
+                case "/explore":
+                    pageComponent = document.createElement("explore-section");
+                    pageTitle = "Explore";
+                    break;
+
+                case "/feed":
+                    pageComponent = document.createElement("feed-section");
+                    pageTitle = "Feed";
+                    break;
+                case "/events":
+                    pageComponent = document.createElement("events-section");
+                    pageTitle = "Events";
+                    break;
+                case "/register":
+                    pageComponent = document.createElement("register-section");
+                    pageTitle = "Register";
+                    break;
+                case "/login":
+                    pageComponent = document.createElement("login-section");
+                    pageTitle = "Login";
+                    break;
+                case "/jobs":
+                    pageComponent = document.createElement("jobs-section");
+                    pageTitle = "Jobs";
+                    jobsContextHeader.style.display = 'flex';
+                    break;
+                case "/inbox":
+                    pageComponent = document.createElement("inbox-section");
+                    pageTitle = "Inbox";
+                    break;
+                case "/employers":
+                    pageComponent = document.createElement("employers-section");
+                    pageTitle = "Employers";
+                    break;
+
+                default:
+                    pageComponent = document.createElement("div");
+                    pageTitle = "No Encontrado";
+                    break;
+            }
         }
 
         if (pageComponent) {
