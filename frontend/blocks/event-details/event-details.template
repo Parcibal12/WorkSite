@@ -1,1 +1,55 @@
+<section class="event-detail">
+    <div class="event-detail__header">
+        <h1 class="event-detail__title" data-element="title">Name of the event</h1>
+        <div class="event-detail__actions">
+            <button class="event-detail__button event-detail__button--save" data-element="save-button">
+                <img src="/frontend/assets/icons/bookmark_filled.svg" alt="Save Icon" class="event-detail__button-icon">
+                <span data-element="save-button-text">Save</span>
+            </button>
+            <button class="event-detail__button event-detail__button--register" data-element="register-button">
+                Register
+            </button>
+        </div>
+    </div>
 
+    <hr class="event-detail__divider">
+
+    <div class="event-detail__info-card">
+        <div class="event-detail__info-item">
+            <img class="event-detail__info-icon" src="https://placehold.co/48x48/333/fff?text=L" alt="Organizer Logo" data-element="logo">
+            <div class="event-detail__info-text">
+                <p class="event-detail__info-main" data-element="employer-name">Employer Name</p>
+                <p class="event-detail__info-sub">Organizer</p>
+            </div>
+        </div>
+        <div class="event-detail__info-item">
+            <div class="event-detail__info-icon event-detail__info-icon--calendar"></div>
+            <div class="event-detail__info-text">
+                <p class="event-detail__info-main" data-element="date">Wed, Sep 17, 2025</p>
+                <p class="event-detail__info-sub" data-element="date-relative">In 13 days</p>
+            </div>
+        </div>
+        <div class="event-detail__info-item">
+            <div class="event-detail__info-icon event-detail__info-icon--location"></div>
+            <div class="event-detail__info-text">
+                <p class="event-detail__info-main" data-element="location-type">In Person</p>
+                <p class="event-detail__info-sub" data-element="location-city">North Las Vegas</p>
+            </div>
+        </div>
+    </div>
+
+    <hr class="event-detail__divider">
+
+    <div class="event-detail__body">
+        <h2 class="event-detail__section-title" data-element="subtitle">Name of the event</h2>
+        <div class="event-detail__datetime">
+            <div class="event-detail__info-icon event-detail__info-icon--calendar"></div>
+            <p data-element="full-datetime">September 17 · 1:00 PM-5:00 PM</p>
+        </div>
+
+        <h3 class="event-detail__section-subtitle">About the event</h3>
+        <p class="event-detail__description" data-element="description">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+    </div>
+</section>
